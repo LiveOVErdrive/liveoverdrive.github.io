@@ -12,5 +12,5 @@ do
   NEXT=$((PAGE+1))
   DESTINATION="../../dadrockgirlpop/$PAGE.html"
   cat ./comicpagetemplate.html | sed "s,IMAGE,$IMAGE,g" | sed "s/PAGE/$PAGE/g" | sed "s/NEXT/$NEXT/g" > $DESTINATION
-  echo '<a href="https://liveoverdrive.github.io/dadrockgirlpop/$PAGE.html">page '$PAGE'</a><br>' >> $INDEX
+  echo '<a href="https://liveoverdrive.github.io/dadrockgirlpop/'$PAGE'.html">page '$PAGE'</a><br>' >> $INDEX
 done
