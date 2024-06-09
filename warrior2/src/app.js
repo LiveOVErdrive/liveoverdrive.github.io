@@ -49,11 +49,13 @@ class MapSquare {
     color = new Color(0.5, 0.5, 0.5),
     backgroundColor = new Color(0.0, 0.0, 0.0),
     light = new Color(1.0, 1.0, 1.0),
+    passable = true
   ) {
     this.symbol = symbol
     this.color = color
     this.backgroundColor = backgroundColor
     this.light = light
+    this.passable = passable
   }
 
   copy(mapSquare) {
@@ -90,40 +92,38 @@ document.onkeypress = function (e) {
     e = e || window.event;
     key = e.keyCode
 
-    if (key == 97) {
-        playerX -= 1
-    } else if (key == 100) {
-        playerX += 1
-    } else if (key == 119) {
-        playerY -= 1
-    } else if (key == 120) {
-        playerY += 1
-    } else if (key == 113) {
-        playerY -= 1
-        playerX -= 1
-    } else if (key == 101) {
-        playerX += 1
-        playerY -= 1
-    } else if (key == 122) {
-        playerX -= 1
-        playerY += 1
-    } else if (key == 99) {
-        playerX += 1
-        playerY += 1
+    if (key == 97) {         // a
+        movePlayer(-1, 0)
+    } else if (key == 100) { // d
+        movePlayer(1, 0)
+    } else if (key == 119) { // w
+        movePlayer(0, -1)
+    } else if (key == 120) { // x
+        movePlayer(0, 1)
+    } else if (key == 113) { // q
+        movePlayer(-1, -1)
+    } else if (key == 101) { // e
+        movePlayer(1, -1)
+    } else if (key == 122) { // z
+        movePlayer(-1, 1)
+    } else if (key == 99) {  // c
+        movePlayer(1, 1)
     }
-
-    console.log(playerX, playerY)
 
     paintMap()
 };
+
+function movePlayer(x, y) {
+    // TODO check map to see if square is passable
+    playerX += x
+    playerY += y
+}
 
 function paintMap() {
     player = new FGThing()
     floor = new MapSquare()
     playerSquare = new MapSquare()
     playerSquare.setFGObject(player)
-
-    console.log(playerSquare)
 
     framebuffer = ""
     for (let y = 0; y < 20; y++) {
