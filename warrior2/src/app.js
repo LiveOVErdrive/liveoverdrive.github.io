@@ -1,10 +1,6 @@
 // Warrior II Browser Game
 
-// Global variables
-playerX = 5
-playerY = 5
-
-
+/** GRAPHICS **/
 
 class Color {
   constructor(r=0.5, g=0.5, b=0.5) {
@@ -75,12 +71,16 @@ class MapSquare {
 
   getHTML() {
     return '<span style="color: ' + this.color.multiply(this.light).getHexCode() +
-           '; background-color: ' + this.backgroundColor.multiply(this.light).getHexCode() + '>'
-           + this.symbol + '</span>'
+           '; background-color: ' + this.backgroundColor.multiply(this.light).getHexCode() + '">'
+           + this.symbol + ' </span>'
   }
 }
 
+/** GAME **/
 
+// Global variables
+playerX = 5
+playerY = 5
 
 // Startup:
 paintMap()
@@ -112,14 +112,18 @@ document.onkeypress = function (e) {
         playerY += 1
     }
 
+    console.log(playerX, playerY)
+
     paintMap()
 };
 
 function paintMap() {
     player = new FGThing()
     floor = new MapSquare()
-    playerSquare = floor.copy()
+    playerSquare = new MapSquare()
     playerSquare.setFGObject(player)
+
+    console.log(playerSquare)
 
     framebuffer = ""
     for (let y = 0; y < 20; y++) {
