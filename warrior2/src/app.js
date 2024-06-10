@@ -33,10 +33,17 @@ class Color {
   }
 }
 
+class Colors {
+  static black = new Color(0,0,0)
+  static white = new Color(1,1,1)
+  static darkGray = new Color(0.2,0.2,0.2)
+  static gray = new Color(0.5,0.5,0.5)
+}
+
 class FGThing {
   constructor(
     symbol = "@",
-    color = new Color(1,1,1)
+    color = Colors.white
   ) {
     this.symbol = symbol
     this.color = color
@@ -46,9 +53,9 @@ class FGThing {
 class MapSquare {
   constructor(
     symbol = ".",
-    color = new Color(0.5, 0.5, 0.5),
-    backgroundColor = new Color(0.0, 0.0, 0.0),
-    light = new Color(1.0, 1.0, 1.0),
+    color = Colors.gray,
+    backgroundColor = Colors.black,
+    light = Colors.white,
     passable = true
   ) {
     this.symbol = symbol
@@ -78,6 +85,12 @@ class MapSquare {
   }
 }
 
+class Tiles {
+    static caveWall = new MapSquare("#", Colors.white, Colors.gray, Colors.white, false)
+    static caveFloor = new MapSquare(".", Colors.gray, Colors.darkGray)
+    static blankSquare = new MapSquare(".", Colors.black, Colors.black)
+}
+
 /** GameMap **/
 
 class GameMap {
@@ -100,10 +113,14 @@ class GameMap {
 }
 
 function createMap() {
-    gameMap = new GameMap(50, 50)
-    for (let y = 0; y < 50; y++) {
-        for (let x = 0; x < 50; x++) {
-            gameMap.setSquare(x, y, new MapSquare)
+    gameMap = new GameMap(20, 20)
+    for (let y = 0; y < gameMap.sizeY; y++) {
+        for (let x = 0; x < gameMap.sizeX; x++) {
+            if (x == 0 || x == gameMap.sizeX-1 || y == 0 || y == gameMap.sizeY-1) {
+                gameMap.setSquare(x, y, Tiles.caveWall)
+            } else {
+                gameMap.setSquare(x, y, Tiles.caveFloor)
+            }
         }
     }
     return gameMap
@@ -147,36 +164,52 @@ document.onkeypress = function (e) {
 };
 
 function movePlayer(x, y) {
-    // TODO check map to see if square is passable
-    playerX += x
-    playerY += y
+    if (mainGameMap.getSquare(playerX + x, playerY + y).passable == true) {
+        playerX += x
+        playerY += y
+    }
 }
 
 function paintMap(currentMap) {
+    // todo store player somewhere better
     player = new FGThing()
-    floor = new MapSquare()
-    playerSquare = new MapSquare()
-    playerSquare.setFGObject(player)
-    blankSquare = new MapSquare(".", new Color(0,0,0), new Color(0,0,0))
+    viewPortX = 20
+    viewPortY = 20
 
-    framebuffer = ""
-    xZero = playerX - 10
-    yZero = playerY - 10
-    for (let y = 0; y < 20; y++) {
-      for (let x = 0; x < 20; x++) {
+    mapBuffer = []
+    xZero = playerX - viewPortX/2
+    yZero = playerY - viewPortY/2
+
+    // fill in the map
+    for (let y = 0; y < viewPortY; y++) {
+      mapBuffer[y] = []
+      for (let x = 0; x < viewPortX; x++) {
         mapX = xZero + x
         mapY = yZero + y
-        if (x == 10 && y == 10) {
-          framebuffer += playerSquare.getHTML()
-        } else if (mapX < currentMap.sizeX && mapX >= 0 && mapY < currentMap.sizeY && mapY >= 0){
-          framebuffer += currentMap.getSquare(mapX, mapY).getHTML()
+        if (mapX < currentMap.sizeX && mapX >= 0 && mapY < currentMap.sizeY && mapY >= 0){
+          mapBuffer[y][x] = currentMap.getSquare(mapX, mapY).copy()
         } else {
-          framebuffer += blankSquare.getHTML()
+          mapBuffer[y][x] = Tiles.blankSquare
         }
       }
-      framebuffer += "<br/>"
+    }
+    console.log(mapBuffer)
+
+    // fill in the player
+    mapBuffer[playerY-yZero][playerX-xZero].setFGObject(player)
+
+    // TODO fill in the FG objects from list
+    // TODO do the lighting
+
+    // Write the html framebuffer
+    frameBuffer = ""
+    for (let y = 0; y < viewPortY; y++) {
+      for (let x = 0; x < viewPortX; x++) {
+        frameBuffer += mapBuffer[y][x].getHTML()
+      }
+      frameBuffer += "<br/>"
     }
     pElement = document.getElementById('frame')
-    pElement.innerHTML = framebuffer
+    pElement.innerHTML = frameBuffer
 }
 
