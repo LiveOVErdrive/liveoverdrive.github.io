@@ -78,6 +78,39 @@ class MapSquare {
   }
 }
 
+/** GameMap **/
+
+class GameMap {
+    constructor(x,y) {
+        this.sizeX = x
+        this.sizeY = y
+        this.grid = []
+        for (let i = 0; i<y; i++) {
+          this.grid[i] = []
+        }
+    }
+
+    getSquare(x, y) {
+        return this.grid[y][x]
+    }
+
+    setSquare(x, y, mapSquare) {
+        this.grid[x][y] = mapSquare
+    }
+}
+
+function createMap() {
+    gameMap = new GameMap(50, 50)
+    for (let y = 0; y < 50; y++) {
+        for (let x = 0; x < 50; x++) {
+            gameMap.setSquare(x, y, new MapSquare)
+        }
+    }
+    return gameMap
+}
+
+mainGameMap = createMap()
+
 /** GAME **/
 
 // Global variables
@@ -85,7 +118,7 @@ playerX = 5
 playerY = 5
 
 // Startup:
-paintMap()
+paintMap(mainGameMap)
 
 // Game Loop: ticks on a keypress
 document.onkeypress = function (e) {
@@ -110,7 +143,7 @@ document.onkeypress = function (e) {
         movePlayer(1, 1)
     }
 
-    paintMap()
+    paintMap(mainGameMap)
 };
 
 function movePlayer(x, y) {
@@ -119,21 +152,26 @@ function movePlayer(x, y) {
     playerY += y
 }
 
-function paintMap() {
+function paintMap(currentMap) {
     player = new FGThing()
     floor = new MapSquare()
     playerSquare = new MapSquare()
     playerSquare.setFGObject(player)
+    blankSquare = new MapSquare(".", new Color(0,0,0), new Color(0,0,0))
 
     framebuffer = ""
+    xZero = playerX - 10
+    yZero = playerY - 10
     for (let y = 0; y < 20; y++) {
       for (let x = 0; x < 20; x++) {
-        if (x == playerX && y == playerY) {
-          //framebuffer += '<span style="color: white; background-color: darkgreen">@ </span>'
+        mapX = xZero + x
+        mapY = yZero + y
+        if (x == 10 && y == 10) {
           framebuffer += playerSquare.getHTML()
+        } else if (mapX < currentMap.sizeX && mapX >= 0 && mapY < currentMap.sizeY && mapY >= 0){
+          framebuffer += currentMap.getSquare(mapX, mapY).getHTML()
         } else {
-          //framebuffer += '<span style="color: black; background-color: darkgreen">. </span>'
-          framebuffer += floor.getHTML()
+          framebuffer += blankSquare.getHTML()
         }
       }
       framebuffer += "<br/>"
