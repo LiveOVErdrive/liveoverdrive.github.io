@@ -38,6 +38,7 @@ class Colors {
   static white = new Color(1,1,1)
   static darkGray = new Color(0.2,0.2,0.2)
   static gray = new Color(0.5,0.5,0.5)
+  static brown = new Color(0.25,0.2,0.15)
 }
 
 class FGThing {
@@ -87,7 +88,7 @@ class MapSquare {
 
 class Tiles {
     static caveWall = new MapSquare("#", Colors.white, Colors.gray, Colors.white, false)
-    static caveFloor = new MapSquare(".", Colors.gray, Colors.darkGray)
+    static caveFloor = new MapSquare(".", Colors.gray, Colors.brown)
     static blankSquare = new MapSquare(".", Colors.black, Colors.black)
 }
 
@@ -108,33 +109,129 @@ class GameMap {
     }
 
     setSquare(x, y, mapSquare) {
-        this.grid[x][y] = mapSquare
+        this.grid[y][x] = mapSquare
     }
 }
 
 function createMap() {
-    gameMap = new GameMap(20, 20)
+    const mapGenStrings = [
+        "0000000000000000000000000000000000000000",
+        "0111111111111110000000011111110000000000",
+        "0111111111111110000000011111110000000000",
+        "0111111111111111111111111111110000000000",
+        "0111111111111110000000011111110000000000",
+        "0111111111111110000000011111110000000000",
+        "0111111111111110000000000010000000000000",
+        "0000000000000000000000000010000000000000",
+        "0000000000000000000000000010000000000000",
+        "0000000000000000000000000010000000000000",
+        "0000000000000000000000000010000000000000",
+        "0000000000000000000000000010000000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000011111110000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+        "0000000000000000000000000000000000000000",
+    ]
+    const mapTileConversionMap = new Map()
+    mapTileConversionMap.set('0',Tiles.caveWall)
+    mapTileConversionMap.set('1',Tiles.caveFloor)
+    gameMap = new GameMap(mapGenStrings[0].length, mapGenStrings.length)
     for (let y = 0; y < gameMap.sizeY; y++) {
         for (let x = 0; x < gameMap.sizeX; x++) {
-            if (x == 0 || x == gameMap.sizeX-1 || y == 0 || y == gameMap.sizeY-1) {
-                gameMap.setSquare(x, y, Tiles.caveWall)
-            } else {
-                gameMap.setSquare(x, y, Tiles.caveFloor)
-            }
+            const thisChar = mapGenStrings[y].charAt(x)
+            const thisTile = mapTileConversionMap.get(thisChar)
+            gameMap.setSquare(x, y, thisTile)
         }
     }
     return gameMap
 }
 
-mainGameMap = createMap()
+function randInt(max) {
+    return Math.floor(Math.random()*max)
+}
+
+function randomMap() {
+    gameMap = new GameMap(100, 100)
+    // fill the map with wall
+    for (let y = 0; y < gameMap.sizeY; y++) {
+        for (let x = 0; x < gameMap.sizeX; x++) {
+            gameMap.setSquare(x, y, Tiles.caveWall)
+        }
+    }
+    let numberOfRooms=30
+    for (let room = 0; room < numberOfRooms; room++) {
+        let upperLeftX = randInt(89) + 1
+        let upperLeftY = randInt(89) + 1
+        let lowerRightX = upperLeftX + randInt(5)+3
+        let lowerRightY = upperLeftY + randInt(5)+3
+        console.log(upperLeftX, upperLeftY, lowerRightX, lowerRightY)
+        for (let x = upperLeftX; x <= lowerRightX; x++) {
+            for (let y = upperLeftY; y <= lowerRightY; y++) {
+                console.log(x,y)
+                gameMap.setSquare(x, y, Tiles.caveFloor)
+            }
+        }
+
+    }
+    return gameMap
+}
+
+function setPlayerPosition(x, y) {
+    playerX = x
+    playerY = y
+}
+
+function movePlayer(x, y) {
+    if (mainGameMap.getSquare(playerX + x, playerY + y).passable == true) {
+        setPlayerPosition(playerX + x, playerY + y)
+    } else {
+        log("Umph! You run into a wall!<br/>")
+    }
+}
+
+function placePlayerInRoom() {
+    for (let y = 0; y < mainGameMap.sizeY; y++) {
+        for (let x = 0; x < mainGameMap.sizeX; x++) {
+            if (gameMap.getSquare(x,y).passable) {
+                setPlayerPosition(x,y)
+                return
+            }
+        }
+    }
+}
+
 
 /** GAME **/
 
 // Global variables
 playerX = 5
 playerY = 5
+turnCount = 0
 
 // Startup:
+mainGameMap = createMap()
+placePlayerInRoom()
 paintMap(mainGameMap)
 
 // Game Loop: ticks on a keypress
@@ -158,17 +255,19 @@ document.onkeypress = function (e) {
         movePlayer(-1, 1)
     } else if (key == 99) {  // c
         movePlayer(1, 1)
+    } else {
+        return
     }
 
+    turnCount++
     paintMap(mainGameMap)
 };
 
-function movePlayer(x, y) {
-    if (mainGameMap.getSquare(playerX + x, playerY + y).passable == true) {
-        playerX += x
-        playerY += y
-    }
+function log(message) {
+    pElement = document.getElementById('log')
+    pElement.innerHTML = turnCount + " " + message + pElement.innerHTML
 }
+
 
 function paintMap(currentMap) {
     // todo store player somewhere better
@@ -198,6 +297,7 @@ function paintMap(currentMap) {
     mapBuffer[playerY-yZero][playerX-xZero].setFGObject(player)
 
     // TODO fill in the FG objects from list
+
     // TODO do the lighting
 
     // Write the html framebuffer
