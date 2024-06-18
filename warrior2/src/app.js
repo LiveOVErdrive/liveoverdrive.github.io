@@ -76,8 +76,8 @@ function log(message) {
 function paintMap(currentMap) {
     // todo store player somewhere better
     player = new FGThing()
-    viewPortX = 20
-    viewPortY = 20
+    viewPortX = 40
+    viewPortY = 26
 
     mapBuffer = []
     xZero = playerX - viewPortX/2
