@@ -1,58 +1,6 @@
 // Warrior II Browser Game
 
-function createMap() {
-    const mapGenStrings = [
-        "0000000000000000000000000000000000000000",
-        "0111111111111110000000011111110000000000",
-        "0111111111111110000000011111110000000000",
-        "0111111111111111111111111111110000000000",
-        "0111111111111110000000011111110000000000",
-        "0111111111111110000000011111110000000000",
-        "0111111111111110000000000010000000000000",
-        "0000000000000000000000000010000000000000",
-        "0000000000000000000000000010000000000000",
-        "0000000000000000000000000010000000000000",
-        "0000000000000000000000000010000000000000",
-        "0000000000000000000000000010000000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000011111110000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-        "0000000000000000000000000000000000000000",
-    ]
-    const mapTileConversionMap = new Map()
-    mapTileConversionMap.set('0',Tiles.caveWall)
-    mapTileConversionMap.set('1',Tiles.caveFloor)
-    gameMap = new GameMap(mapGenStrings[0].length, mapGenStrings.length)
-    for (let y = 0; y < gameMap.sizeY; y++) {
-        for (let x = 0; x < gameMap.sizeX; x++) {
-            const thisChar = mapGenStrings[y].charAt(x)
-            const thisTile = mapTileConversionMap.get(thisChar)
-            gameMap.setSquare(x, y, thisTile)
-        }
-    }
-    return gameMap
-}
+// TODO store game state stuff like this somewhere that makes sense.
 
 function setPlayerPosition(x, y) {
     playerX = x
@@ -67,7 +15,7 @@ function movePlayer(x, y) {
     }
 }
 
-function placePlayerInRoom() {
+function placePlayerInRoom(gameMap) {
     for (let y = 0; y < mainGameMap.sizeY; y++) {
         for (let x = 0; x < mainGameMap.sizeX; x++) {
             if (gameMap.getSquare(x,y).passable) {
@@ -78,7 +26,6 @@ function placePlayerInRoom() {
     }
 }
 
-
 /** GAME **/
 
 // Global variables
@@ -87,8 +34,8 @@ playerY = 5
 turnCount = 0
 
 // Startup:
-mainGameMap = createMap()
-placePlayerInRoom()
+mainGameMap = GameMap.createFromMapString(demoMap)
+placePlayerInRoom(mainGameMap)
 paintMap(mainGameMap)
 
 // Game Loop: ticks on a keypress
@@ -125,7 +72,7 @@ function log(message) {
     pElement.innerHTML = turnCount + " " + message + pElement.innerHTML
 }
 
-
+// todo this should go somewhere map or graphics related probably
 function paintMap(currentMap) {
     // todo store player somewhere better
     player = new FGThing()
