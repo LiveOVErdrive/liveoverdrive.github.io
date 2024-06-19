@@ -1,5 +1,7 @@
 // Warrior II Browser Game
 
+ui = new UI()
+
 // TODO store game state stuff like this somewhere that makes sense.
 
 function setPlayerPosition(x, y) {
@@ -11,7 +13,7 @@ function movePlayer(x, y) {
     if (mainGameMap.getSquare(playerX + x, playerY + y).passable == true) {
         setPlayerPosition(playerX + x, playerY + y)
     } else {
-        log("Umph! You run into a wall!<br/>")
+        ui.log("Umph! You run into a wall!<br/>")
     }
 }
 
@@ -67,17 +69,12 @@ document.onkeypress = function (e) {
     paintMap(mainGameMap)
 };
 
-function log(message) {
-    pElement = document.getElementById('log')
-    pElement.innerHTML = turnCount + " " + message + pElement.innerHTML
-}
-
 // todo this should go somewhere map or graphics related probably
 function paintMap(currentMap) {
     // todo store player somewhere better
     player = new FGThing()
-    viewPortX = 40
-    viewPortY = 26
+    viewPortX = 24
+    viewPortY = 24
 
     mapBuffer = []
     xZero = playerX - viewPortX/2
@@ -112,7 +109,6 @@ function paintMap(currentMap) {
       }
       frameBuffer += "<br/>"
     }
-    pElement = document.getElementById('frame')
-    pElement.innerHTML = frameBuffer
+    ui.updateMap(frameBuffer)
 }
 

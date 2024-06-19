@@ -9,7 +9,7 @@ class GameMap {
     }
 
     getSquare(x, y) {
-        if (x>this.sizeX || x<0 || y>this.sizeY || y<0) {
+        if (x>=this.sizeX || x<0 || y>=this.sizeY || y<0) {
             return Tiles.blankSquare
         }
         return this.grid[y][x]
