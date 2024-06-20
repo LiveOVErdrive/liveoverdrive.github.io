@@ -1,6 +1,6 @@
 class Player {
   constructor(
-    name = "Tav",
+    name = "Bruh",
     race = "Human",
     job = "Warrior",
     maxHp = 10,
@@ -18,10 +18,17 @@ class Player {
     this.mp = maxMp
     this.maxMp = maxMp
     this.xp = xP
+    this.attack = 10
+    this.defence = 5
+    this.magic = 5
+    this.resistance = 2
+    this.speed = 10
     this.positionX = positionX
     this.positionY = positionY
     this.map = map
   }
+
+  getName() { return this.name }
 
   setPosition(x,y) {
     this.positionX = x

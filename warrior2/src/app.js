@@ -34,6 +34,7 @@ function placePlayerInRoom(gameMap) {
 playerX = 5
 playerY = 5
 turnCount = 0
+player = new Player()
 
 // Startup:
 mainGameMap = GameMap.createFromMapString(demoMap)
@@ -72,7 +73,7 @@ document.onkeypress = function (e) {
 // todo this should go somewhere map or graphics related probably
 function paintMap(currentMap) {
     // todo store player somewhere better
-    player = new FGThing()
+    playerTile = new FGThing()
     viewPortX = 24
     viewPortY = 24
 
@@ -95,7 +96,7 @@ function paintMap(currentMap) {
     }
 
     // fill in the player
-    mapBuffer[playerY-yZero][playerX-xZero].setFGObject(player)
+    mapBuffer[playerY-yZero][playerX-xZero].setFGObject(playerTile)
 
     // TODO fill in the FG objects from list
 
@@ -110,5 +111,6 @@ function paintMap(currentMap) {
       frameBuffer += "<br/>"
     }
     ui.updateMap(frameBuffer)
+    ui.updateStats(player)
 }
 
