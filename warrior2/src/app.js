@@ -38,6 +38,7 @@ player = new Player()
 
 // Startup:
 mainGameMap = GameMap.createFromMapString(demoMap)
+mainGameMap.addActorAt(new Actor(), 4, 4)
 placePlayerInRoom(mainGameMap)
 paintMap(mainGameMap)
 
@@ -66,6 +67,7 @@ document.onkeypress = function (e) {
         return
     }
 
+    mainGameMap.runAllActorsAI()
     turnCount++
     paintMap(mainGameMap)
 };
@@ -89,6 +91,10 @@ function paintMap(currentMap) {
         mapY = yZero + y
         if (mapX < currentMap.sizeX && mapX >= 0 && mapY < currentMap.sizeY && mapY >= 0){
           mapBuffer[y][x] = currentMap.getSquare(mapX, mapY).copy()
+          const actor = currentMap.getActorAt(mapX, mapY)
+          if (actor != null) {
+              mapBuffer[y][x].setFGObject(actor.fGThing)
+          }
         } else {
           mapBuffer[y][x] = Tiles.blankSquare
         }
