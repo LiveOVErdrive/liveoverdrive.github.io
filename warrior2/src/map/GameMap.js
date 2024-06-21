@@ -1,11 +1,13 @@
 class GameMap {
-    constructor(x,y) {
+    constructor(x,y,player) {
         this.sizeX = x
         this.sizeY = y
         this.grid = []
         for (let i = 0; i<y; i++) {
           this.grid[i] = []
         }
+        this.player = player
+        this.actors = []
     }
 
     getSquare(x, y) {
@@ -17,6 +19,36 @@ class GameMap {
 
     setSquare(x, y, mapSquare) {
         this.grid[y][x] = mapSquare
+    }
+
+    addActorAt(actor, x, y) {
+        actor.positionX = x
+        actor.positionY = y
+        this.actors.push(actor)
+    }
+
+    runAllActorsAI() {
+        for (const actor of this.actors) {
+            actor.runAI(this)
+        }
+    }
+
+    getActorAt(x,y) {
+        for (const actor of this.actors) {
+            if (actor.positionX == x && actor.positionY == y) {
+                return actor
+            }
+        }
+        return null
+    }
+
+    tileIsOpen(x,y) {
+        for (const actor of this.actors) {
+            if (actor.positionX == x && actor.positionY == y) {
+                return false
+            }
+        }
+        return getSquare(x, y).passable
     }
 
     static createFromMapString(mapGenStringArray) {
