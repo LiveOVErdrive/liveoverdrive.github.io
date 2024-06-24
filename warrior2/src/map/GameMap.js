@@ -1,29 +1,31 @@
 class GameMap {
-    constructor(x,y,player) {
-        this.sizeX = x
-        this.sizeY = y
+    constructor(sizeXYCoord,player) {
+        this.size = sizeXYCoord
         this.grid = []
-        for (let i = 0; i<y; i++) {
+        for (let i = 0; i<this.size.y; i++) {
           this.grid[i] = []
         }
         this.player = player
         this.actors = []
     }
 
-    getSquare(x, y) {
-        if (x>=this.sizeX || x<0 || y>=this.sizeY || y<0) {
-            return Tiles.blankSquare
+    getSquare(xYCoord) {
+        if (this.coordinatesInBounds(xYCoord)) {
+          return this.grid[xYCoord.y][xYCoord.x]
         }
-        return this.grid[y][x]
+        return Tiles.blankSquare
     }
 
-    setSquare(x, y, mapSquare) {
-        this.grid[y][x] = mapSquare
+    setSquare(xYCoord, mapSquare) {
+        if (this.coordinatesInBounds(xYCoord)) {
+          this.grid[xYCoord.y][xYCoord.x] = mapSquare
+        } else {
+          console.error("attempted to set OOB square")
+        }
     }
 
-    addActorAt(actor, x, y) {
-        actor.positionX = x
-        actor.positionY = y
+    addActorAt(actor, xYCoord) {
+        actor.position = xYCoord
         this.actors.push(actor)
     }
 
@@ -33,31 +35,35 @@ class GameMap {
         }
     }
 
-    getActorAt(x,y) {
+    getActorAt(xYCoord) {
         for (const actor of this.actors) {
-            if (actor.positionX == x && actor.positionY == y) {
+            if (actor.isAt(xYCoord)) {
                 return actor
             }
         }
         return null
     }
 
-    tileIsOpen(x,y) {
-        for (const actor of this.actors) {
-            if (actor.positionX == x && actor.positionY == y) {
-                return false
-            }
-        }
-        return getSquare(x, y).passable
+    tileIsOpen(xYCoord) {
+        return (getSquare(xYCoord).passable && getActorAt(xYCoord) == null)
+    }
+
+    coordinatesInBounds(xYCoord) {
+      return (xYCoord.x >= 0
+        && xYCoord.x < this.size.x
+        && xYCoord.y >= 0
+        && xYCoord.y < this.size.y)
     }
 
     static createFromMapString(mapGenStringArray) {
-        const gameMap = new GameMap(mapGenStringArray[0].length, mapGenStringArray.length)
-        for (let y = 0; y < gameMap.sizeY; y++) {
-            for (let x = 0; x < gameMap.sizeX; x++) {
+        const mapSize = new XYCoord(mapGenStringArray[0].length, mapGenStringArray.length)
+        const gameMap = new GameMap(mapSize)
+        for (let y = 0; y < gameMap.size.y; y++) {
+            for (let x = 0; x < gameMap.size.x; x++) {
+                const xYCoord = new XYCoord(x,y)
                 const thisChar = mapGenStringArray[y].charAt(x)
                 const thisTile = mapTileConversionMap.get(thisChar)
-                gameMap.setSquare(x, y, thisTile)
+                gameMap.setSquare(xYCoord, thisTile)
             }
         }
         return gameMap

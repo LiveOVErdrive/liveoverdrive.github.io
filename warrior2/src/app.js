@@ -1,45 +1,15 @@
 // Warrior II Browser Game
 
+// "Services"
 ui = new UI()
 
-// TODO store game state stuff like this somewhere that makes sense.
-
-function setPlayerPosition(x, y) {
-    playerX = x
-    playerY = y
-}
-
-function movePlayer(x, y) {
-    if (mainGameMap.getSquare(playerX + x, playerY + y).passable == true) {
-        setPlayerPosition(playerX + x, playerY + y)
-    } else {
-        ui.log("Umph! You run into a wall!<br/>")
-    }
-}
-
-function placePlayerInRoom(gameMap) {
-    for (let y = 0; y < mainGameMap.sizeY; y++) {
-        for (let x = 0; x < mainGameMap.sizeX; x++) {
-            if (gameMap.getSquare(x,y).passable) {
-                setPlayerPosition(x,y)
-                return
-            }
-        }
-    }
-}
-
-/** GAME **/
-
 // Global variables
-playerX = 5
-playerY = 5
 turnCount = 0
 player = new Player()
 
 // Startup:
-mainGameMap = GameMap.createFromMapString(demoMap)
-mainGameMap.addActorAt(new Actor(), 4, 4)
-placePlayerInRoom(mainGameMap)
+mainGameMap = GameMap.createFromMapString(demoMap,player)
+mainGameMap.addActorAt(new Actor(), new XYCoord(4,4))
 paintMap(mainGameMap)
 
 // Game Loop: ticks on a keypress
@@ -48,21 +18,21 @@ document.onkeypress = function (e) {
     key = e.keyCode
 
     if (key == 97) {         // a
-        movePlayer(-1, 0)
+        player.move(Directions.W, mainGameMap)
     } else if (key == 100) { // d
-        movePlayer(1, 0)
+        player.move(Directions.E, mainGameMap)
     } else if (key == 119) { // w
-        movePlayer(0, -1)
+        player.move(Directions.N, mainGameMap)
     } else if (key == 120) { // x
-        movePlayer(0, 1)
+        player.move(Directions.S, mainGameMap)
     } else if (key == 113) { // q
-        movePlayer(-1, -1)
+        player.move(Directions.NW, mainGameMap)
     } else if (key == 101) { // e
-        movePlayer(1, -1)
+        player.move(Directions.NE, mainGameMap)
     } else if (key == 122) { // z
-        movePlayer(-1, 1)
+        player.move(Directions.SW, mainGameMap)
     } else if (key == 99) {  // c
-        movePlayer(1, 1)
+        player.move(Directions.SE, mainGameMap)
     } else {
         return
     }
@@ -74,35 +44,31 @@ document.onkeypress = function (e) {
 
 // todo this should go somewhere map or graphics related probably
 function paintMap(currentMap) {
-    // todo store player somewhere better
-    playerTile = new FGThing()
     viewPortX = 24
     viewPortY = 24
 
     mapBuffer = []
-    xZero = playerX - viewPortX/2
-    yZero = playerY - viewPortY/2
+    xZero = player.position.x - viewPortX/2
+    yZero = player.position.y - viewPortY/2
 
     // fill in the map
     for (let y = 0; y < viewPortY; y++) {
       mapBuffer[y] = []
       for (let x = 0; x < viewPortX; x++) {
-        mapX = xZero + x
-        mapY = yZero + y
-        if (mapX < currentMap.sizeX && mapX >= 0 && mapY < currentMap.sizeY && mapY >= 0){
-          mapBuffer[y][x] = currentMap.getSquare(mapX, mapY).copy()
-          const actor = currentMap.getActorAt(mapX, mapY)
+        const mapCoord = new XYCoord(xZero + x, yZero + y)
+        if (currentMap.coordinatesInBounds(mapCoord)){
+          mapBuffer[y][x] = currentMap.getSquare(mapCoord).copy()
+          const actor = currentMap.getActorAt(mapCoord)
           if (actor != null) {
-              mapBuffer[y][x].setFGObject(actor.fGThing)
+            mapBuffer[y][x].setFGObject(actor.fGThing)
+          } else if (player.position.equals(mapCoord)) {
+            mapBuffer[y][x].setFGObject(player.fGThing)
           }
         } else {
           mapBuffer[y][x] = Tiles.blankSquare
         }
       }
     }
-
-    // fill in the player
-    mapBuffer[playerY-yZero][playerX-xZero].setFGObject(playerTile)
 
     // TODO fill in the FG objects from list
 
