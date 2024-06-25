@@ -62,7 +62,7 @@ class GameMap {
             for (let x = 0; x < gameMap.size.x; x++) {
                 const xYCoord = new XYCoord(x,y)
                 const thisChar = mapGenStringArray[y].charAt(x)
-                const thisTile = mapTileConversionMap.get(thisChar)
+                const thisTile = MapTileConversionMap.get(thisChar)
                 gameMap.setSquare(xYCoord, thisTile)
             }
         }

@@ -36,7 +36,7 @@ class Actor {
 
   move(xYCoord, gameMap) {
     const targetCoord = this.position.plus(xYCoord)
-    if (gameMap.getSquare(targetCoord).passable == true) {
+    if (gameMap.tileIsOpen(targetCoord)) {
       this.position = targetCoord
     }
   }
