@@ -54,25 +54,37 @@ class Actor {
     }
 
     // currentStep hold all the squares reachable on THIS iteration of the BFS
-    let currentStep = [XYCoord.copyFrom(this.position)]
+    let currentStep = []
+    currentStep.push(XYCoord.copyFrom(this.position))
     vectorMap[this.position.y][this.position.x] = new XYCoord(0,0)
     // nextStep will hold all the unvisited squares reachable from the currentStep squares
     let nextStep = []
+    let distanceHardCap = 1000
     // check each adjacent square to see if we can go there and if we have gone there
-    while (currentStep.size > 0) {
+    while (currentStep.length > 0 && distanceHardCap > 0) {
+      distanceHardCap--
       for (const step of currentStep) {
+        const stepVector = vectorMap[step.y][step.x]
         if (step.equals(destinationCoord)) {
           // success end case : we've found the shortest path to the dest.
-          this.move(vectorMap[step.y][step.x])
+          this.move(stepVector, gameMap)
           return
         }
-        for ( let y = 0; y<3; y++ ) {
-          for ( let x = 0; x<3; x++ ) {
+        for ( let y = -1; y<2; y++ ) {
+          for ( let x = -1; x<2; x++ ) {
             const adjCoord = new XYCoord(step.x + x, step.y + y)
-            if (gameMap.coordinatesInBounds(adjCoord) &&
-                (vectorMap[adjCoord.y][adjCoord.x] != null && gameMap.tileIsOpen(adjCoord.x, adjCoord.y))) {
-              nextStep.push(adjCoord)
-              vectorMap[y][x] = step
+            if (gameMap.coordinatesInBounds(adjCoord)) {
+              const currentVector = vectorMap[adjCoord.y][adjCoord.x] 
+              if (currentVector === null && gameMap.tileIsOpen(adjCoord)) {
+                nextStep.push(adjCoord)
+                if (step.equals(this.position)) {
+                  // if this is the first time through, we fill in the first-step vector
+                  vectorMap[adjCoord.y][adjCoord.x] = new XYCoord(x,y)
+                } else {
+                  // copy the first-step vector from the previous step
+                  vectorMap[adjCoord.y][adjCoord.x] = stepVector
+                }
+              }
             }
           }
         }

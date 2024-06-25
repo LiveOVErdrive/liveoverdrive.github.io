@@ -45,7 +45,7 @@ class GameMap {
     }
 
     tileIsOpen(xYCoord) {
-        return (getSquare(xYCoord).passable && getActorAt(xYCoord) == null)
+        return (this.getSquare(xYCoord).passable && this.getActorAt(xYCoord) == null)
     }
 
     coordinatesInBounds(xYCoord) {
