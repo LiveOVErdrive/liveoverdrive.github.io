@@ -4,6 +4,7 @@ class UI {
     this.frame = document.getElementById('frame')
     this.logWindow = document.getElementById('log')
     this.logs = []
+    this.maxLogLines = 16
   }
 
   log(text) {
@@ -12,8 +13,11 @@ class UI {
   }
 
   refreshLogs() {
+    while(this.logs.length > this.maxLogLines) {
+      this.logs.shift()
+    }
     let logHTML = ""
-    for (let i = this.logs.length-1; i>=0 && i>=this.logs.length-10; i--) {
+    for (let i = this.logs.length-1; i>=0; i--) {
       let color = "gray"
       if (this.logs[i].turn == turnCount) {
         color = "white"

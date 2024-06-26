@@ -55,6 +55,22 @@ class GameMap {
         && xYCoord.y < this.size.y)
     }
 
+    getRandomOpenSquare() {
+      const openSquares = []
+      for (let y = 0; y < this.size.y; y++) {
+        for (let x = 0; x < this.size.x; x++) {
+          const here = new XYCoord(x,y)
+          if (this.tileIsOpen(here)) {
+            openSquares.push(here)
+          }
+        }
+      }
+      if (openSquares.length === 0) {
+          return null
+      }
+      return (openSquares[randInt(openSquares.length)])
+    }
+
     static createFromMapString(mapGenStringArray) {
         const mapSize = new XYCoord(mapGenStringArray[0].length, mapGenStringArray.length)
         const gameMap = new GameMap(mapSize)

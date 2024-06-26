@@ -23,6 +23,7 @@ class Actor {
     this.resistance = 2
     this.speed = 10
     this.position = position
+    this.destination = position
     this.fGThing = fGThing
   }
 
@@ -41,7 +42,11 @@ class Actor {
     }
   }
 
-  walkTowardDestination(destinationCoord, gameMap) {
+  setDestination(xYCoord) {
+    this.destination = xYCoord
+  }
+
+  walkTowardDestination(gameMap) {
     // TODO fix this - it just falls through to random
     // vectorMap stores the movement vector for the actor to START their walk to a given
     // square, based on the BFS to come.
@@ -65,7 +70,7 @@ class Actor {
       distanceHardCap--
       for (const step of currentStep) {
         const stepVector = vectorMap[step.y][step.x]
-        if (step.equals(destinationCoord)) {
+        if (step.equals(this.destination)) {
           // success end case : we've found the shortest path to the dest.
           this.move(stepVector, gameMap)
           return
@@ -102,6 +107,9 @@ class Actor {
   }
 
   runAI(gameMap) {
-    this.walkTowardDestination(new XYCoord(20,4), gameMap)
+    if (this.destination.equals(this.position)) {
+      this.destination = gameMap.getRandomOpenSquare()
+    }
+    this.walkTowardDestination(gameMap)
   }
 }
