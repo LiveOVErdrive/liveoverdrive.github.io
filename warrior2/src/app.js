@@ -5,7 +5,7 @@ ui = new UI()
 
 // Global variables
 turnCount = 0
-player = new Player()
+player = new Player(ui)
 
 // Startup:
 mainGameMap = GameMap.createFromMapString(demoMap)
@@ -15,6 +15,7 @@ paintMap(mainGameMap)
 
 // Game Loop: ticks on a keypress
 document.onkeypress = function (e) {
+    turnCount++
     e = e || window.event;
     key = e.code
 
@@ -35,19 +36,20 @@ document.onkeypress = function (e) {
     } else if (key == 'KeyC' || key == 'Numpad3') {
         player.move(Directions.SE, mainGameMap)
     } else if (key == 'KeyS' || key == 'Numpad5') {
-        // NOP
+        // Player wait: Do nothing but tick the clock
     } else {
+        // Not a key we use: Do nothing and DON'T tick the clock
         return
     }
 
     mainGameMap.runAllActorsAI()
-    turnCount++
     paintMap(mainGameMap)
+    ui.refreshLogs()
 };
 
 // todo this should go somewhere map or graphics related probably
 function paintMap(currentMap) {
-    viewPortX = 24
+    viewPortX = 40
     viewPortY = 24
 
     mapBuffer = []
@@ -85,7 +87,6 @@ function paintMap(currentMap) {
       }
       frameBuffer += "<br/>"
     }
-    ui.updateMap(frameBuffer)
-    ui.updateStats(player)
+    ui.updateFrame(frameBuffer)
 }
 

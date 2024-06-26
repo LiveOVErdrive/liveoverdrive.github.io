@@ -1,28 +1,37 @@
+    // todo this class needs to be a singleton
 class UI {
   constructor() {
-    this.mapWindow = document.getElementById('frame')
-    this.statsWindow = document.getElementById('stats')
+    this.frame = document.getElementById('frame')
     this.logWindow = document.getElementById('log')
+    this.logs = []
   }
 
-  log(message) {
-    this.logWindow.innerHTML = turnCount + " " + message + this.logWindow.innerHTML
+  log(text) {
+    this.logs.push(new Message(turnCount, text))
+    this.refreshLogs()
   }
 
-  updateMap(html) {
-    this.mapWindow.innerHTML = html
+  refreshLogs() {
+    let logHTML = ""
+    for (let i = this.logs.length-1; i>=0 && i>=this.logs.length-10; i--) {
+      let color = "gray"
+      if (this.logs[i].turn == turnCount) {
+        color = "white"
+      }
+      logHTML += '<span style="color: ' + color + '">' + this.logs[i].turn + " " + this.logs[i].text + "</span>" + "<br/>"
+    }
+    this.logWindow.innerHTML = logHTML
   }
 
-  updateStats(player) {
-    const yellow = 'style="color: yellow"'
-    let html = '' +
-    `<span>${player.name} the ${player.race} ${player.job}</span><br><br>` +
-    `<span ${yellow}>ATK:</span> ${player.attack}<br>` +
-    `<span ${yellow}>DEF:</span> ${player.defence}<br>` +
-    `<span ${yellow}>MAG:</span> ${player.magic}<br>` +
-    `<span ${yellow}>RES:</span> ${player.resistance}<br>` +
-    `<span ${yellow}>SPD:</span> ${player.speed}<br>`
+  updateFrame(html) {
+    this.frame.innerHTML = html
+  }
 
-    this.statsWindow.innerHTML = html
+}
+
+class Message {
+  constructor(turn, text) {
+    this.turn = turn
+    this.text = text
   }
 }
