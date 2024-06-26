@@ -16,24 +16,26 @@ paintMap(mainGameMap)
 // Game Loop: ticks on a keypress
 document.onkeypress = function (e) {
     e = e || window.event;
-    key = e.keyCode
+    key = e.code
 
-    if (key == 97) {         // a
+    if (key == 'KeyA' || key == 'Numpad4') {
         player.move(Directions.W, mainGameMap)
-    } else if (key == 100) { // d
+    } else if (key == 'KeyD' || key == 'Numpad6') {
         player.move(Directions.E, mainGameMap)
-    } else if (key == 119) { // w
+    } else if (key == 'KeyW' || key == 'Numpad8') {
         player.move(Directions.N, mainGameMap)
-    } else if (key == 120) { // x
+    } else if (key == 'KeyX' || key == 'Numpad2') {
         player.move(Directions.S, mainGameMap)
-    } else if (key == 113) { // q
+    } else if (key == 'KeyQ' || key == 'Numpad7') {
         player.move(Directions.NW, mainGameMap)
-    } else if (key == 101) { // e
+    } else if (key == 'KeyE' || key == 'Numpad9') {
         player.move(Directions.NE, mainGameMap)
-    } else if (key == 122) { // z
+    } else if (key == 'KeyZ' || key == 'Numpad1') {
         player.move(Directions.SW, mainGameMap)
-    } else if (key == 99) {  // c
+    } else if (key == 'KeyC' || key == 'Numpad3') {
         player.move(Directions.SE, mainGameMap)
+    } else if (key == 'KeyS' || key == 'Numpad5') {
+        // NOP
     } else {
         return
     }
