@@ -9,9 +9,11 @@ class Player extends Actor {
       10,
       10,
       0,
-      new XYCoord(0,0),
+      new XYCoord(8,2),
       new FGThing("@", Colors.white)
     )
   }
+
+  runAI(gameMap) { /* do nothing */ }
 
 }

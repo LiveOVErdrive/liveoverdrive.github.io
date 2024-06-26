@@ -8,7 +8,8 @@ turnCount = 0
 player = new Player()
 
 // Startup:
-mainGameMap = GameMap.createFromMapString(demoMap,player)
+mainGameMap = GameMap.createFromMapString(demoMap)
+mainGameMap.addActorAt(player, new XYCoord(8,4))
 mainGameMap.addActorAt(new Actor(), new XYCoord(4,4))
 paintMap(mainGameMap)
 
