@@ -1,4 +1,4 @@
 function randInt(max) {
-    return Math.floor(Math.random()*max)
+    return Math.floor(Math.random() * max)
 }
 

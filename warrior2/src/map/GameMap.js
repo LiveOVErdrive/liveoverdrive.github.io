@@ -1,9 +1,9 @@
 class GameMap {
-    constructor(sizeXYCoord,player) {
+    constructor(sizeXYCoord, player) {
         this.size = sizeXYCoord
         this.grid = []
-        for (let i = 0; i<this.size.y; i++) {
-          this.grid[i] = []
+        for (let i = 0; i < this.size.y; i++) {
+            this.grid[i] = []
         }
         this.player = player
         this.actors = []
@@ -11,16 +11,16 @@ class GameMap {
 
     getSquare(xYCoord) {
         if (this.coordinatesInBounds(xYCoord)) {
-          return this.grid[xYCoord.y][xYCoord.x]
+            return this.grid[xYCoord.y][xYCoord.x]
         }
         return Tiles.blankSquare
     }
 
     setSquare(xYCoord, mapSquare) {
         if (this.coordinatesInBounds(xYCoord)) {
-          this.grid[xYCoord.y][xYCoord.x] = mapSquare
+            this.grid[xYCoord.y][xYCoord.x] = mapSquare
         } else {
-          console.error("attempted to set OOB square")
+            console.error("attempted to set OOB square")
         }
     }
 
@@ -49,26 +49,26 @@ class GameMap {
     }
 
     coordinatesInBounds(xYCoord) {
-      return (xYCoord.x >= 0
-        && xYCoord.x < this.size.x
-        && xYCoord.y >= 0
-        && xYCoord.y < this.size.y)
+        return (xYCoord.x >= 0
+            && xYCoord.x < this.size.x
+            && xYCoord.y >= 0
+            && xYCoord.y < this.size.y)
     }
 
     getRandomOpenSquare() {
-      const openSquares = []
-      for (let y = 0; y < this.size.y; y++) {
-        for (let x = 0; x < this.size.x; x++) {
-          const here = new XYCoord(x,y)
-          if (this.tileIsOpen(here)) {
-            openSquares.push(here)
-          }
+        const openSquares = []
+        for (let y = 0; y < this.size.y; y++) {
+            for (let x = 0; x < this.size.x; x++) {
+                const here = new XYCoord(x, y)
+                if (this.tileIsOpen(here)) {
+                    openSquares.push(here)
+                }
+            }
         }
-      }
-      if (openSquares.length === 0) {
-          return null
-      }
-      return (openSquares[randInt(openSquares.length)])
+        if (openSquares.length === 0) {
+            return null
+        }
+        return (openSquares[randInt(openSquares.length)])
     }
 
     static createFromMapString(mapGenStringArray) {
@@ -76,7 +76,7 @@ class GameMap {
         const gameMap = new GameMap(mapSize)
         for (let y = 0; y < gameMap.size.y; y++) {
             for (let x = 0; x < gameMap.size.x; x++) {
-                const xYCoord = new XYCoord(x,y)
+                const xYCoord = new XYCoord(x, y)
                 const thisChar = mapGenStringArray[y].charAt(x)
                 const thisTile = MapTileConversionMap.get(thisChar)
                 gameMap.setSquare(xYCoord, thisTile)
