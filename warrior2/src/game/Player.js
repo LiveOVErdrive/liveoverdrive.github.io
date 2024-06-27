@@ -1,5 +1,5 @@
 class Player extends Actor {
-  constructor(ui) {
+  constructor(gameContext) {
     // todo // This is dumb. Does JS not have named params.
     // todo // Come up with a better way to do this. Will need for monsters.
     super(
@@ -12,7 +12,7 @@ class Player extends Actor {
       new XYCoord(8,2),
       new FGThing("@", Colors.white)
     )
-    this.ui = ui
+    this.gameContext = gameContext
   }
 
   runAI(gameMap) { /* do nothing */ }
@@ -22,7 +22,7 @@ class Player extends Actor {
     if (gameMap.tileIsOpen(targetCoord)) {
       this.position = targetCoord
     } else {
-      this.ui.log("Umph! You run into a wall!")
+      this.gameContext.ui.log("Umph! You run into a wall!")
     }
   }
 }

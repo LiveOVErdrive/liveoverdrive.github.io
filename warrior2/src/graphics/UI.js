@@ -1,6 +1,7 @@
     // todo this class needs to be a singleton
 class UI {
-  constructor() {
+  constructor(gameContext) {
+    this.gameContext = gameContext
     this.frame = document.getElementById('frame')
     this.logWindow = document.getElementById('log')
     this.logs = []
@@ -8,7 +9,7 @@ class UI {
   }
 
   log(text) {
-    this.logs.push(new Message(turnCount, text))
+    this.logs.push(new Message(gameContext.turnCount, text))
     this.refreshLogs()
   }
 
@@ -19,7 +20,7 @@ class UI {
     let logHTML = ""
     for (let i = this.logs.length-1; i>=0; i--) {
       let color = "gray"
-      if (this.logs[i].turn == turnCount) {
+      if (this.logs[i].turn == gameContext.turnCount) {
         color = "white"
       }
       logHTML += '<span style="color: ' + color + '">' + this.logs[i].turn + " " + this.logs[i].text + "</span>" + "<br/>"
