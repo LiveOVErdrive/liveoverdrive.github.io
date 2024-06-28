@@ -68,7 +68,7 @@ class GameMap {
         if (openSquares.length === 0) {
             return null
         }
-        return (openSquares[randInt(openSquares.length)])
+        return (openSquares[Util.randInt(openSquares.length)])
     }
 
     static createFromMapString(mapGenStringArray) {

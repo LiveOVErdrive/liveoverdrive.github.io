@@ -102,7 +102,7 @@ class Actor {
     }
 
     moveRandom(gameMap) {
-        const moveVector = new XYCoord(randInt(3) - 1, randInt(3) - 1)
+        const moveVector = new XYCoord(Util.randInt(3) - 1, randInt(3) - 1)
         this.move(moveVector, gameMap)
     }
 
