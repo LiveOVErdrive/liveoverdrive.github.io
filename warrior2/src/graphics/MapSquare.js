@@ -27,8 +27,10 @@ class MapSquare {
     }
 
     getHTML() {
-        return '<span style="color: ' + this.color.multiply(this.light).getHexCode() +
-            '; background-color: ' + this.backgroundColor.multiply(this.light).getHexCode() + '">'
-            + this.symbol + ' </span>'
+        return Util.addHtmlColor(
+            `${this.symbol}${Util.htmlSpace()}`,
+            this.color.multiply(this.light).getHexCode(),
+            this.backgroundColor.multiply(this.light).getHexCode()
+        )
     }
 }

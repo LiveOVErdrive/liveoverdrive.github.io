@@ -14,7 +14,7 @@ class BattleScreen extends Screen {
         player2.hp = 10
         this.players = [player1, player2]
         this.enemies = [enemy1, enemy2, enemy3]
-        this.barLength = 10
+        this.spriteWidth = 10
     }
 
     handleKeyPress(Key) {
@@ -41,14 +41,14 @@ class BattleScreen extends Screen {
 
     generateHealthBar(hp, totalHp) {
         const percent = hp / totalHp
-        const fullLength = Math.floor(this.barLength * percent)
+        const fullLength = Math.floor(this.spriteWidth * percent)
         let color = "green"
         if (percent < 0.25) {
             color = "red"
         } else if (percent < 0.51) {
             color = "yellow"
         }
-        return `<span style="color:${color};">` + "#".repeat(fullLength) + "-".repeat(this.barLength - fullLength) + "</span>"
+        return `<span style="color:${color};">` + "#".repeat(fullLength) + "-".repeat(this.spriteWidth - fullLength) + "</span>"
     }
 
     displayCombatants() {
@@ -72,13 +72,19 @@ class BattleScreen extends Screen {
             const mapSquare = new MapSquare()
             mapSquare.setFGObject(combatant.fGThing)
             symbols.push(mapSquare.getHTML())
-            names.push(combatant.name)
+            names.push(BattleScreen.truncateStringAndPadTo(combatant.name, this.spriteWidth))
             healthBars.push(this.generateHealthBar(combatant.hp, combatant.maxHp))
         }
-        frameBuffer += this.displayEvenlySpacedRow(healthBars, this.barLength*combatantsArray.length)
-        frameBuffer += this.displayEvenlySpacedRow(symbols, symbols.length)
-        frameBuffer += this.displayEvenlySpacedRow(names)
+        frameBuffer += this.displayEvenlySpacedRow(healthBars, this.spriteWidth*combatantsArray.length)
+        frameBuffer += this.displayEvenlySpacedRow(symbols, symbols.length*2)
+        frameBuffer += this.displayEvenlySpacedRow(names, this.spriteWidth*combatantsArray.length)
         return frameBuffer
+    }
+
+    static truncateStringAndPadTo(string, width) {
+        const truncatedString = string.substring(0,width)
+        return truncatedString + Util.htmlSpace().repeat(width-truncatedString.length)
+
     }
 
     displayEvenlySpacedRow(textArray, printedChars = null) {
@@ -94,7 +100,7 @@ class BattleScreen extends Screen {
         let spacing = Math.floor(totalCharsOfWhitespace / (textArray.length + 1))
         let frameBuffer = ""
         for (let text of textArray) {
-            frameBuffer += "&nbsp;".repeat(spacing) + text
+            frameBuffer += Util.htmlSpace().repeat(spacing) + text
         }
         frameBuffer += "<br/>"
         return frameBuffer
