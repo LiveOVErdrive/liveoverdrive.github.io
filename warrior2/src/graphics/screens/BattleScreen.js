@@ -52,14 +52,14 @@ class BattleScreen extends Screen {
     }
 
     displayCombatants() {
-        const totalRowsUsed = 18
+        const totalRowsUsed = 22
         const rowsOfWhitespace = gameContext.viewPortSize.y - totalRowsUsed
-        let frameBuffer = "<br/>"
+        let frameBuffer = "<br>"
         frameBuffer += this.displayTeam(this.enemies)
-        frameBuffer += "<br/>".repeat(rowsOfWhitespace)
+        frameBuffer += "<br>" + ".".repeat(gameContext.viewPortSize.x * 2 - 1) + "<br>"
+        frameBuffer += "<br>".repeat(rowsOfWhitespace)
         frameBuffer += this.displayTeam(this.players)
-        frameBuffer += "<br/>" + "-".repeat(gameContext.viewPortSize.x * 2 - 1) + "<br/>"
-        frameBuffer += "A: Attack<br/>D: Defend"
+        frameBuffer += "<br>"
         this.gameContext.ui.updateFrame(frameBuffer)
     }
 
@@ -94,7 +94,6 @@ class BattleScreen extends Screen {
         let spacing = Math.floor(totalCharsOfWhitespace / (textArray.length + 1))
         let frameBuffer = ""
         for (let text of textArray) {
-            console.log(text)
             frameBuffer += Util.htmlSpace().repeat(spacing) + text
         }
         frameBuffer += "<br/>"
@@ -108,7 +107,6 @@ class BattleScreen extends Screen {
             for (let combatant of combatantsArray) {
                 spriteRow.push(combatant.battleSprite.getRow(row))
             }
-            console.log(spriteRow)
             buffer += this.displayEvenlySpacedRow(spriteRow, this.spriteWidth*combatantsArray.length)
         }
         return buffer

@@ -1,11 +1,14 @@
 class BattleSprite {
     constructor() {
+        // todo pass this in the constructor for individual sprites
         const spriteString = [
             "          ",
-            " \\  o     ",
-            "  \\/V0    ",
-            "    ǁ     ",
-            "    ǁ     "
+            "          ",
+            "          ",
+            "  | A  /  ",
+            "  |/V\\/   ",
+            "  | ǁ     ",
+            "  | ǁ     "
         ]
         this.sprite = []
         for (let row of spriteString) {
@@ -18,7 +21,7 @@ class BattleSprite {
     }
 
     static getDimensions() {
-        return new XYCoord(10,5)
+        return new XYCoord(10,7)
     }
 
     // TODO: let the color of the weapons and armor reflect the item color for player characters in the future.
