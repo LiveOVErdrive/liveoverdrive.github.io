@@ -25,6 +25,7 @@ class Actor {
         this.position = position
         this.destination = position
         this.fGThing = fGThing
+        this.battleSprite = new BattleSprite()
     }
 
     setPosition(xYCoord) {

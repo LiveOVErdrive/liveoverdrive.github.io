@@ -10,5 +10,10 @@ class Util {
     static htmlSpace() {
         return "&nbsp;"
     }
+
+    static truncateStringAndPadTo(string, width) {
+        const truncatedString = string.substring(0,width)
+        return truncatedString + Util.htmlSpace().repeat(width-truncatedString.length)
+    }
 }
 
