@@ -2,12 +2,9 @@ class BattleScreen extends Screen {
     constructor(gameContext) {
         super(gameContext)
         this.round = 1
-        const enemy1 = new Actor("goblin", "", "", 20, 0, 0, null, new FGThing("g", Colors.lightBrown))
-        enemy1.hp = 17
-        const enemy2 = new Actor("minotaur", "", "", 20, 0, 0, null, new FGThing("M", Colors.lightGreen))
-        enemy2.hp = 4
-        const enemy3 = new Actor("goblin", "", "", 20, 0, 0, null, new FGThing("g", Colors.lightBrown))
-        enemy3.hp = 9
+        const enemy1 = new GoblinActor()
+        const enemy2 = new MinotaurActor()
+        const enemy3 = new GoblinActor()
         const player1 = new Actor("Jerome", "", "", 20, 0, 0, null, new FGThing("@", Colors.white))
         player1.hp = 19
         const player2 = new Actor("Hidalgo", "", "", 20, 0, 0, null, new FGThing("@", Colors.pureBlue))
@@ -15,9 +12,15 @@ class BattleScreen extends Screen {
         this.players = [player1, player2]
         this.enemies = [enemy1, enemy2, enemy3]
         this.spriteWidth = 10
+        this.battleState = BattleState.polling
+        this.currentIndex = 0
     }
-
+    
     handleKeyPress(Key) {
+        // TODO: set up a state machine to go through all of the player's actors and select the move they're gonna do.
+        // then pick the moves the enemies will do. Do it at random, but take aggro into account....eventually.
+        // then compute the order they go, using speed of the actor, speed of the move, and a random amount to break the tie (rand 0-1 added on)
+        // then use a state machine to go through each move happening in order. Calculate targets of enemies AT MOVE TIME to take into account aggro.
         if (Key == 'KeyA') {
             this.log("You attack!")
         } else if (Key == 'KeyD') {
@@ -112,4 +115,9 @@ class BattleScreen extends Screen {
         return buffer
     }
 
+}
+
+class BattleState {
+    static polling = 0
+    static fighting = 1
 }

@@ -1,7 +1,6 @@
 class BattleSprite {
-    constructor() {
-        // todo pass this in the constructor for individual sprites
-        const spriteString = [
+    constructor(
+        spriteString = [
             "          ",
             "          ",
             "          ",
@@ -10,6 +9,9 @@ class BattleSprite {
             "  | ǁ     ",
             "  | ǁ     "
         ]
+    ) {
+        this.spriteString = spriteString
+        // todo pass this in the constructor for individual sprites
         this.sprite = []
         for (let row of spriteString) {
             this.sprite.push(Util.addHtmlColor(Util.truncateStringAndPadTo(row, BattleSprite.getDimensions().x).replaceAll(" ", Util.htmlSpace()), Colors.white.getHexCode(), Colors.black.getHexCode()))
