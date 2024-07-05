@@ -6,7 +6,7 @@ gameContext = new GameContext()
 // Startup:
 const testMapScreen = new TestMapScreen(gameContext)
 const battleScreen = new BattleScreen(gameContext)
-let currentScreen = battleScreen
+let currentScreen = testMapScreen
 currentScreen.updateDisplay()
 
 // Game Loop: ticks on a keypress
