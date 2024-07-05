@@ -7,7 +7,8 @@ class Actor {
         maxMp = 10,
         xP = 0,
         position = new XYCoord(0, 0),
-        fGThing = new FGThing("@", Colors.pureBlue)
+        fGThing = new FGThing("@", Colors.pureBlue),
+        battleSprite = new BattleSprite()
     ) {
         this.name = name
         this.race = race
@@ -25,6 +26,7 @@ class Actor {
         this.position = position
         this.destination = position
         this.fGThing = fGThing
+        this.battleSprite = battleSprite
     }
 
     setPosition(xYCoord) {
@@ -102,7 +104,7 @@ class Actor {
     }
 
     moveRandom(gameMap) {
-        const moveVector = new XYCoord(Util.randInt(3) - 1, randInt(3) - 1)
+        const moveVector = new XYCoord(Util.randInt(3) - 1, Util.randInt(3) - 1)
         this.move(moveVector, gameMap)
     }
 

@@ -5,11 +5,13 @@ gameContext = new GameContext()
 
 // Startup:
 const testMapScreen = new TestMapScreen(gameContext)
-testMapScreen.updateDisplay()
+const battleScreen = new BattleScreen(gameContext)
+let currentScreen = testMapScreen
+currentScreen.updateDisplay()
 
 // Game Loop: ticks on a keypress
 document.onkeypress = function (e) {
     e = e || window.event;
     const keyCode = e.code
-    testMapScreen.handleKeyPress(keyCode)
+    currentScreen.handleKeyPress(keyCode)
 };

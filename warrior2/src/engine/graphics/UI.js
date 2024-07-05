@@ -25,7 +25,11 @@ class UI {
             }
             logHTML += '<span style="color: ' + color + '">' + this.logs[i].turn + " " + this.logs[i].text + "</span>" + "<br/>"
         }
-        this.logWindow.innerHTML = logHTML
+        this.setLog(logHTML)
+    }
+
+    setLog(html) {
+        this.logWindow.innerHTML = html
     }
 
     updateFrame(html) {
