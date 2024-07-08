@@ -40,45 +40,33 @@ class MapScreen extends Screen {
     }
 
     paintMap() {
-        this.gameContext.viewPortSize.x = 40
-        this.gameContext.viewPortSize.y = 24
-
-        const mapBuffer = []
-        const xZero = gameContext.player.position.x - this.gameContext.viewPortSize.x / 2
+        const visibleMapSize = new XYCoord(this.gameContext.viewPortSize.x / 2, this.gameContext.viewPortSize.y)
+        const xZero = gameContext.player.position.x - this.gameContext.viewPortSize.x / 4
         const yZero = gameContext.player.position.y - this.gameContext.viewPortSize.y / 2
 
         // fill in the map
-        for (let y = 0; y < this.gameContext.viewPortSize.y; y++) {
-            mapBuffer[y] = []
-            for (let x = 0; x < this.gameContext.viewPortSize.x; x++) {
+        const ui = this.gameContext.ui
+        ui.resetFrame()
+        for (let x = 0; x < visibleMapSize.x; x++) {
+            for (let y = 0; y < visibleMapSize.y; y++) {
                 const mapCoord = new XYCoord(xZero + x, yZero + y)
+                let mapSquare = Tiles.blankSquare
                 if (this.gameMap.coordinatesInBounds(mapCoord)) {
-                    mapBuffer[y][x] = this.gameMap.getSquare(mapCoord).copy()
+                    mapSquare = this.gameMap.getSquare(mapCoord).copy()
                     const actor = this.gameMap.getActorAt(mapCoord)
                     if (actor != null) {
-                        mapBuffer[y][x].setFGObject(actor.fGThing)
+                        mapSquare.setFGObject(actor.fGThing)
                     } else if (gameContext.player.position.equals(mapCoord)) {
-                        mapBuffer[y][x].setFGObject(gameContext.player.fGThing)
+                        mapSquare.setFGObject(gameContext.player.fGThing)
                     }
-                } else {
-                    mapBuffer[y][x] = Tiles.blankSquare
                 }
+                const colorChars = mapSquare.getColorChars()
+                const frameCoords = [new XYCoord(x*2,y), new XYCoord(x*2 + 1,y)]
+                ui.paintOverFrameChar(frameCoords[0], colorChars[0])
+                ui.paintOverFrameChar(frameCoords[1], colorChars[1])
             }
         }
-
-        // TODO fill in the FG objects from list
-
-        // TODO do the lighting
-
-        // Write the html framebuffer
-        let frameBuffer = ""
-        for (let y = 0; y < this.gameContext.viewPortSize.y; y++) {
-            for (let x = 0; x < this.gameContext.viewPortSize.x; x++) {
-                frameBuffer += mapBuffer[y][x].getHTML()
-            }
-            frameBuffer += "<br/>"
-        }
-        gameContext.ui.updateFrame(frameBuffer)
+        ui.paintFrame()
     }
 
 
