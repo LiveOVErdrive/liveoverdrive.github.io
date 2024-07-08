@@ -2,6 +2,7 @@
 // be displayed.
 class Screen {
     constructor(gameContext) {
+        /** @type {GameContext} */
         this.gameContext = gameContext
     }
 

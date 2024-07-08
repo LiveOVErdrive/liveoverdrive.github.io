@@ -1,4 +1,3 @@
-// todo this class needs to be a singleton
 class UI {
     constructor(gameContext) {
         this.gameContext = gameContext
@@ -6,6 +5,78 @@ class UI {
         this.logWindow = document.getElementById('log')
         this.logs = []
         this.maxLogLines = 16
+        this.frameBuffer = []
+        for (let x = 0; x < gameContext.viewPortSize.x; x++) {
+            this.frameBuffer[x] = []
+            for (let y = 0; y < gameContext.viewPortSize.y; y++) {
+                this.frameBuffer[x][y] = new ColorChar()
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param {XYCoord} xYCoord 
+     * @returns {ColorChar}
+     */
+    getFrameChar(xYCoord) {
+        return this.frameBuffer[xYCoord.x][xYCoord.y]
+    }
+
+    /**
+     * 
+     * @param {XYCoord} xYCoord 
+     * @param {ColorChar} colorChar 
+     */
+    paintOverFrameChar(xYCoord, colorChar) {
+        this.frameBuffer[xYCoord.x][xYCoord.y].paintOverWith(colorChar)
+    }
+
+    resetFrame() {
+        for (let x = 0; x < gameContext.viewPortSize.x; x++) {
+            for (let y = 0; y < gameContext.viewPortSize.y; y++) {
+                this.frameBuffer[x][y].reset()
+            }
+        }
+    }
+
+    paintFrame() {
+        let htmlFrameBuffer = ""
+        let currentBlock = ""
+        let firstOfBlock = null
+        const printTheBlock = () => {
+            htmlFrameBuffer += Util.addHtmlColor(
+                `${currentBlock}`,
+                firstOfBlock.color.getHexCode(),
+                firstOfBlock.bgColor.getHexCode()
+            )
+        }
+        const newBlock = (thisChar) => {
+            currentBlock = thisChar.getSymbolHtml()
+            firstOfBlock = thisChar
+        }
+        const clearBlock = () => {
+            currentBlock = ""
+            firstOfBlock = null
+        }
+        for (let y = 0; y < gameContext.viewPortSize.y; y++) {
+            for (let x = 0; x < gameContext.viewPortSize.x; x++) {
+                //htmlFrameBuffer += this.getFrameChar(new XYCoord(x, y)).getHtml()
+                const thisChar = this.getFrameChar(new XYCoord(x, y))
+                if (firstOfBlock === null) {
+                    newBlock(thisChar)
+                } else if (firstOfBlock.hasSameColor(thisChar)) {
+                    currentBlock += thisChar.getSymbolHtml()
+                } else {
+                    printTheBlock()
+                    newBlock(thisChar)
+                }
+            }
+            printTheBlock()
+            clearBlock()
+            htmlFrameBuffer += "<br>"
+        }
+        this.frame.innerHTML = htmlFrameBuffer
     }
 
     log(text) {
@@ -31,11 +102,6 @@ class UI {
     setLog(html) {
         this.logWindow.innerHTML = html
     }
-
-    updateFrame(html) {
-        this.frame.innerHTML = html
-    }
-
 }
 
 class Message {

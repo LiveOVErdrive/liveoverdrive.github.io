@@ -4,11 +4,22 @@ class Util {
     }
 
     static addHtmlColor(text, fgColor, bgColor) {
-        return `<span style="color: ${fgColor}; background-color: ${bgColor}">${text}</span>`
+        const bgColorClause = (() => {
+            if (bgColor !== null) {
+                return ` background-color: ${bgColor}`
+            }
+            return ""
+        })()
+        const spaceEncodedText = text.replace(" ", Util.htmlSpace())
+        return `<span style="color: ${fgColor};${bgColorClause}">${spaceEncodedText}</span>`
     }
 
     static htmlSpace() {
         return "&nbsp;"
+    }
+
+    static br() {
+        return "<br>"
     }
 
     static truncateStringAndPadTo(string, width) {

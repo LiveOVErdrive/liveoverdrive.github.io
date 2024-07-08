@@ -1,36 +1,51 @@
 class MapSquare {
+    /**
+     * 
+     * @param {String} symbol 
+     * @param {Color} color 
+     * @param {Color} backgroundColor 
+     * @param {Boolean} passable 
+     */
     constructor(
         symbol = ".",
         color = Colors.gray,
         backgroundColor = Colors.black,
-        light = Colors.white,
         passable = true
     ) {
+        /** @type {String} */
         this.symbol = symbol
+        /** @type {Color} */
         this.color = color
+        /** @type {Color} */
         this.backgroundColor = backgroundColor
-        this.light = light
+        /** @type {Boolean} */
         this.passable = passable
     }
 
-    copy(mapSquare) {
-        return new MapSquare(this.symbol, this.color, this.backgroundColor, this.light)
+    /**
+     * 
+     * @returns {MapSquare}
+     */
+    copy() {
+        return new MapSquare(this.symbol, this.color, this.backgroundColor)
     }
 
-    addLight(additionalLight) {
-        this.light.add(additionalLight)
-    }
-
+    /**
+     * 
+     * @param {FGThing} fGThing 
+     */
     setFGObject(fGThing) {
         this.symbol = fGThing.symbol
         this.color = fGThing.color
     }
 
-    getHTML() {
-        return Util.addHtmlColor(
-            `${this.symbol}${Util.htmlSpace()}`,
-            this.color.multiply(this.light).getHexCode(),
-            this.backgroundColor.multiply(this.light).getHexCode()
-        )
+    /**
+     * @returns {ColorChar[]}
+     */
+    getColorChars() {
+        return [
+            new ColorChar(this.symbol, this.color, this.backgroundColor),
+            new ColorChar(" ", this.color, this.backgroundColor)
+        ]
     }
 }
