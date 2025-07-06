@@ -7,4 +7,7 @@ class Directions {
   static NE = this.N.plus(this.E)
   static SW = this.S.plus(this.W)
   static SE = this.S.plus(this.E)
+  static asList() {
+    return [ W, E, N, S, NW, NE, SW, SE ]
+  }
 }
