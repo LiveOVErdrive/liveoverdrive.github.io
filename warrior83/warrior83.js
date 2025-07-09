@@ -1,119 +1,82 @@
-const screen = () => document.getElementById("screen")
-const input = () => document.getElementById("in")
-const enter = () => document.getElementById("enter")
 
-const space = "&nbsp"
-const newline = "<br>"
-
-// state
-let run = true
-let nextLabel = null
-let isMenu = false
-let menuMap = null
-
-function clrHome() {
-    screen().innerHTML = ""
-}
-
-function disp(...texts) {
-    texts.forEach(text => {
-        const regex = / /g;
-        const htmlSpaceString = text.replaceAll(regex, space)
-        screen().innerHTML = screen().innerHTML + htmlSpaceString + newline
-    })
-}
-
-function pause(lbl) {
-    run = false
-    nextLabel = lbl
-}
-
-function handleEnter() {
-    if (isMenu) {
-        const entry = input().value
-        input().value = null
-        const entryLbl = menuMap.get(entry)
-        if (!entryLbl) return
-        nextLabel = entryLbl
-    }
-    run = true
-    runLoop()
-}
-
-function menu(lbl, title, ...args) {
-    clrHome()
-    menuMap = new Map()
-    disp(title)
-    for (let i=0; i<args.length; i+=2) {
-        const text = args[i]
-        const entryLbl = args[i+1]
-        const index = i/2+1
-        menuMap.set(""+index, entryLbl)
-        disp(index + ". " + text)
-    }
-    isMenu = true
-    run = false
-    nextLabel = lbl
-}
-
-function runLoop() {
-    while(run) {
-        console.log("runloop lbl " + nextLabel)
-        gotoLoop(nextLabel)
-    }
-}
-
-function end() {
-    run = false
-    enter().setAttribute("disabled", true)
-}
-
-enter().addEventListener("click", handleEnter)
-
-function gotoLoop(label) {
+function basicGame(label) {
     switch(label) {
         case null:
+
         // :ClrHome
         clrHome()
+
         // Disp "    Warrior"
         disp("    Warrior")
+
         // Pause 
         pause(100)
         break
         case 100:
+
         // Disp "","   By Ph\ilip","   Breczinski",""
         disp("","   By Philip","   Breczinski","")
+
         // Pause 
         pause(101)
         break
         case 101:
+
         // ClrHome
         clrHome()
+
         // Menu("WARRIOR","NEW GAME",0,"LOAD GAME",98)
         menu(102,"WARRIOR","NEW GAME",0,"LOAD GAME",98)
         break
         case 102:
+
         // Lbl 0
         case 0:
-// Input "Name:",Str1
-// randInt(10,30)->F
-// 0->Q
-// 0->S
-// F->X
-// 0->P
-// randInt(1,20)->A
-// randInt(1,3)->B
-// randInt(3,6)->C
-// B->D
-// C->E
+
+        // Input "Name:",Str1
+        input(103, "Name:")
+        break
+        case 103:
+        Str1 = inputGet()
+
+        // randInt(10,30)->F
+        F = randInt(10,30)
+        // 0->Q
+        Q = 0
+        // 0->S
+        S = 0
+        // F->X
+        X = F
+        // 0->P
+        P = 0
+        // randInt(1,20)->A
+        A = randInt(1,20)
+        // randInt(1,3)->B
+        B = randInt(1,3)
+        // randInt(3,6)->C
+        C = randInt(3,6)
+        // B->D
+        D = B
+        // C->E
+        E = C
+
         // Lbl 1
         case 1:
-// ClrHome
-// Disp "HEALTH:",X,"GOLD:",A,"DAMAGE:",""
-// Output(6,13,B)
-// Output(6,14,"-")
-// Output(6,15,C)
-// Pause 
+
+        // ClrHome
+        clrHome()
+
+        // Disp "HEALTH:",X,"GOLD:",A,"DAMAGE:",""
+        // Output(6,13,B)
+        // Output(6,14,"-")
+        // Output(6,15,C)
+        disp("HEALTH:",X,"GOLD:",A,"DAMAGE:",B+"-"+C)
+
+        // Pause 
+        pause(104)
+        break
+        case 104:
+
         // Lbl 2
         case 2:
 // Menu("TOWN","WOODS",5,"ARMORY",3,"CLERICS",4,"STATS",1,"SAVE AND QUIT",99)
