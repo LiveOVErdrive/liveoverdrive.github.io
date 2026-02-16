@@ -1,43 +1,60 @@
-const screen = () => document.getElementById("screen")
-const inputField = () => document.getElementById("in")
-const enter = () => document.getElementById("enter")
 
-// state
-let run = true
-let nextLabel = null
-let isMenu = false
-let isInput = false
-let menuMap = null
-let inputVal = null
+class Emulator {
+    constructor(screen, inputField, enterButton, basicFile) {
+        // DOM elements representing the I/O hardware
+        this.screen = screen
+        this.inputField = inputField
+        this.enterButton = enterButton
 
-let Str1
-let A
-let B
-let C
-let D
-let E
-let F
-let G
-let H
-let I
-let J
-let K
-let L
-let M
-let N
-let O
-let P
-let Q
-let R
-let S
-let T
-let U
-let V
-let W
-let X
-let Y
-let Z
+        // a string representation of the basic file. NOT the .8XP file.
+        this.file = basicFile.split('\n')
 
+        // records current position in the BASIC file
+        this.pc = 0
+
+        // flags whether the main run loop should continue to run
+        this.run = false
+
+        // Strings Str1-Str9
+        this.strings = new Map()
+        for(let i=1; i<=9; i++) {
+            this.strings.set('Str' + i, '')
+        }
+        // Variables A-Z
+        this.vars = new Map()
+        for(let i='A'; i<='Z'; i++) {
+            this.vars.set(i, 0)
+        }
+
+        enterButton().addEventListener("click", this.handleEnter)
+    }
+
+    runLoop() {
+        while(this.run) {
+            const line = file[pc]
+            this.parseLine(line)
+            this.pc = this.pc+=1
+            if (this.pc >= (this.file.length))
+                this.run = false
+        }
+    }
+
+    parseLine(line) {
+        if (line.startsWith("ClrHome"))
+            console.log("ClrHome")
+        else if (line.startsWith("Disp"))
+            console.log("ClrHome")
+        else
+            console.log("command not implemented: " + line)
+    }
+
+    handleEnter() {
+        this.run = true
+        this.runLoop()
+    }
+}
+
+/*
 function runLoop() {
     while(run) {
         console.log("runloop lbl " + nextLabel)
@@ -52,18 +69,19 @@ function enableEnter() {
     enter().removeAttribute("disabled")
 }
 
+function clearInput() {
+    inputField().value = null
+}
+
 function handleEnter() {
     disableEnter()
     if (isMenu) {
         const entry = inputField().value
-        console.log(entry)
         if (entry === null) {
             enableEnter()
             return
         }
-        inputField().value = null
         const entryLbl = menuMap.get(entry)
-        console.log(entryLbl)
         if (entryLbl === null) {
             enableEnter()
             return
@@ -72,7 +90,6 @@ function handleEnter() {
         isMenu = false
     } else if (isInput) {
         const entry = inputField().value
-        inputField().value = null
         if (entry === null) {
             enableEnter()
             return
@@ -80,6 +97,7 @@ function handleEnter() {
         inputVal = entry
         isInput = false
     }
+    clearInput()
     run = true
     runLoop()
 }
@@ -100,6 +118,10 @@ function disp(...texts) {
     })
 }
 
+function goto(lbl) {
+    nextLabel = lbl
+}
+
 function pause(lbl) {
     run = false
     nextLabel = lbl
@@ -110,7 +132,7 @@ function menu(lbl, title, ...args) {
     clrHome()
     menuMap = new Map()
     disp(title)
-    for (let i=0; i<args.length; i+=2) {
+    for (        this.i=0; i<args.length; i+=2) {
         const text = args[i]
         const entryLbl = args[i+1]
         const index = i/2+1
@@ -138,3 +160,4 @@ function end() {
     run = false
     disableEnter()
 }
+*/
