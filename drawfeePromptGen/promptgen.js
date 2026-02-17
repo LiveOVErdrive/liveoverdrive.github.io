@@ -1,5 +1,7 @@
 const genButton = () => document.getElementById("generatebutton")
-const promptDisplay = () => document.getElementById("prompt")
+const nounDisplay = () => document.getElementById("noun")
+const prefixDisplay = () => document.getElementById("prefix")
+const suffixDisplay = () => document.getElementById("suffix")
 
 const nouns = [
     "snakes",
@@ -107,7 +109,7 @@ const afterAdjectives = [
 
 function addPrefix(input) {
     let index = Math.floor(Math.random() * (beforeAdjectives.length))
-    return beforeAdjectives[index] + ' ' + input
+    return input + ' ' + beforeAdjectives[index] 
 }
 
 function addSuffix(input) {
@@ -116,8 +118,10 @@ function addSuffix(input) {
 }
 
 function setPromptColor(amount) {
-    let hue = Math.floor(Math.random() * 255)
-    promptDisplay().style.color = 'hsl(' + hue + ',100%, 40%)'
+    let huePre = Math.floor(Math.random() * 255)
+    prefixDisplay().style.color = 'hsl(' + huePre + ',100%, 40%)'
+    let hueSuf = Math.floor(Math.random() * 255)
+    suffixDisplay().style.color = 'hsl(' + hueSuf + ',100%, 40%)'
 }
 
 function addAdjective(input) {
@@ -130,9 +134,11 @@ function addAdjective(input) {
 
 function generate() {
     let nounIndex = Math.floor(Math.random() * (nouns.length))
-    var prompt = nouns[nounIndex]
+    var noun = nouns[nounIndex]
+    var prefix = ""
+    var suffix = ""
 
-    let maxAdjectives = 4
+    let maxAdjectives = 3
 
     let rand = Math.random()
     let weightedRand = Math.pow(rand, 6)
@@ -140,11 +146,17 @@ function generate() {
     let numberOfAdjectives = Math.floor(scaledRand)
 
     for (let i = 0; i<=numberOfAdjectives; i++) {
-        prompt = addAdjective(prompt)
+        if ((Math.floor(Math.random() * (afterAdjectives.length + beforeAdjectives.length))) < beforeAdjectives.length) {
+            prefix = addPrefix(prefix)
+        } else {
+            suffix = addSuffix(suffix)
+        }
     }
 
     setPromptColor()
-    promptDisplay().textContent = prompt
+    nounDisplay().textContent = noun
+    prefixDisplay().textContent = prefix
+    suffixDisplay().textContent = suffix
 }
 
 genButton().addEventListener("click", generate)
