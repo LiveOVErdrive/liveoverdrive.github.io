@@ -1,5 +1,7 @@
 const genButton = () => document.getElementById("generatebutton")
-const promptDisplay = () => document.getElementById("prompt")
+const nounDisplay = () => document.getElementById("noun")
+const prefixDisplay = () => document.getElementById("prefix")
+const suffixDisplay = () => document.getElementById("suffix")
 
 const nouns = [
     "snakes",
@@ -11,25 +13,75 @@ const nouns = [
     "Lucario",
     "Johnny Bravo",
     "Augie Doggy",
+    "Joey Wheeler",
+    "Yugi",
+    "Seto Kaiba",
+    "Mai Valentine",
+    "Yogi",
+    "Jacob",
+    "Julia",
+    "Nathan",
+    "Karina",
+    "Shrek",
+    "Garfield",
+    "Odie",
+    "Donkey",
+    "Jotaro",
+    "Ryunosuke Naruhodo",
+    "Ryu",
+    "Ken",
+    "Jimmy",
+    "Frog",
+    "Crab",
+    "Goblin",
+    "ChillChuck",
+    "Laios",
+    "Marcille",
+    "Goofy",
+    "Todd",
+    "Possum",
+    "Raymond",
+    "Michael",
+    "Mickey",
+    "Kermit",
+    "Elmo",
+    "Adam Skate The Infinity",
+    "Legoshi",
 ]
 
 const beforeAdjectives = [
     "flat",
     "smooth",
     "buff",
-    "sfw",
+    "SFW",
     "Jojo's Bizarre",
     "evil",
     "small",
     "big",
     "Jacob",
-    "Newsday",
+    "Nuesday",
     "sad",
     "haunted",
     "icky",
     "oily",
     "stinky",
-    "dangerous"
+    "dangerous",
+    "cat",
+    "magical girl",
+    "cheesy five-layer",
+    "epic",
+    "Final Fantasy",
+    "cursed",
+    "Michigan J.",
+    "girlfail",
+    "boyfail",
+    "Twitch streamer",
+    "influencer",
+    "Pope",
+    "undead",
+    "scared",
+    "bodybuilder",
+    "shaved",
 ]
 
 const afterAdjectives = [
@@ -40,11 +92,24 @@ const afterAdjectives = [
     "vs. boobs",
     "and Doggy Daddy",
     "full of vampires",
+    "catboy",
+    "made from cheese",
+    "Animal Crossing",
+    "The Second",
+    ", Esquire",
+    "-field",
+    "in mortal peril",
+    "Beastars",
+    "from Mario",
+    "with cheese",
+    "but good",
+    "but worse",
+    "with a beard",
 ]
 
 function addPrefix(input) {
     let index = Math.floor(Math.random() * (beforeAdjectives.length))
-    return beforeAdjectives[index] + ' ' + input
+    return input + ' ' + beforeAdjectives[index] 
 }
 
 function addSuffix(input) {
@@ -53,8 +118,10 @@ function addSuffix(input) {
 }
 
 function setPromptColor(amount) {
-    let hue = Math.floor(Math.random() * 255)
-    promptDisplay().style.color = 'hsl(' + hue + ',100%, 40%)'
+    let huePre = Math.floor(Math.random() * 255)
+    prefixDisplay().style.color = 'hsl(' + huePre + ',100%, 40%)'
+    let hueSuf = Math.floor(Math.random() * 255)
+    suffixDisplay().style.color = 'hsl(' + hueSuf + ',100%, 40%)'
 }
 
 function addAdjective(input) {
@@ -67,9 +134,11 @@ function addAdjective(input) {
 
 function generate() {
     let nounIndex = Math.floor(Math.random() * (nouns.length))
-    var prompt = nouns[nounIndex]
+    var noun = nouns[nounIndex]
+    var prefix = ""
+    var suffix = ""
 
-    let maxAdjectives = 4
+    let maxAdjectives = 3
 
     let rand = Math.random()
     let weightedRand = Math.pow(rand, 6)
@@ -77,11 +146,17 @@ function generate() {
     let numberOfAdjectives = Math.floor(scaledRand)
 
     for (let i = 0; i<=numberOfAdjectives; i++) {
-        prompt = addAdjective(prompt)
+        if ((Math.floor(Math.random() * (afterAdjectives.length + beforeAdjectives.length))) < beforeAdjectives.length) {
+            prefix = addPrefix(prefix)
+        } else {
+            suffix = addSuffix(suffix)
+        }
     }
 
     setPromptColor()
-    promptDisplay().textContent = prompt
+    nounDisplay().textContent = noun
+    prefixDisplay().textContent = prefix
+    suffixDisplay().textContent = suffix
 }
 
 genButton().addEventListener("click", generate)
