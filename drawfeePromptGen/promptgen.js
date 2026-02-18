@@ -2,6 +2,11 @@ const genButton = () => document.getElementById("generatebutton")
 const nounDisplay = () => document.getElementById("noun")
 const prefixDisplay = () => document.getElementById("prefix")
 const suffixDisplay = () => document.getElementById("suffix")
+const versionDisplay = () => document.getElementById("version")
+const countDisplay = () => document.getElementById("promptcount")
+
+const version = "1.0.0"
+const maxAdjectives = 3
 
 const nouns = [
     "snakes",
@@ -141,6 +146,25 @@ const nouns = [
     "Peter Griffin",
     "Brian Griffin",
     "Bob Belcher",
+    "Gojo",
+    "Skeleton",
+    "Man",
+    "Edward Cullen",
+    "Bella Swan",
+    "Charlie Swan",
+    "Bugs Bunny",
+    "Elmer Fudd",
+    "Daffy Duck",
+    "Bobby Hill",
+    "Hank Hill",
+    "Peggy Hill",
+    "Dale Gribble",
+    "Boomhauer",
+    "Cookie Puss",
+    "Fudgie the Whale",
+    "Godzilla",
+    "Kong",
+    "Cheese",
 ]
 
 const beforeAdjectives = [
@@ -153,13 +177,20 @@ const beforeAdjectives = [
     "Jojo's Bizarre",
     "salaryman",
     "colossal",
+    "Charles Entertainment",
     "evil",
     "small",
+    "Doctor",
+    "Baron von",
+    "sparkling",
     "big",
     "Sir",
+    "pickle",
     "Jacob-",
     "sugar free",
     "Nuesday",
+    "Mr.",
+    "Mrs.",
     "sad",
     "haunted",
     "icky",
@@ -192,7 +223,6 @@ const beforeAdjectives = [
     "untenable",
     "silly",
     "yassified",
-    "Clip Studio",
     "cozy",
     "tired",
     "divorced dad",
@@ -222,13 +252,10 @@ const beforeAdjectives = [
     "nervous",
     "weird",
     "necromancer",
+    "catboy",
     "odd",
     "keyhole",
     "Family Guy",
-
-
-
-
 ]
 
 const afterAdjectives = [
@@ -239,11 +266,11 @@ const afterAdjectives = [
     "vs. boobs",
     "and Doggy Daddy",
     "full of vampires",
-    "catboy",
     "made from cheese",
     "Animal Crossing",
     "The Second",
     "and Toad",
+    "-Kong",
     ", Esquire",
     "-field",
     "in mortal peril",
@@ -258,7 +285,11 @@ const afterAdjectives = [
     "Pro",
     "-hunter",
     "GX",
-    ", Ace Attorney"
+    ", Ace Attorney",
+    "to relax/study to",
+    "Deluxe",
+    "Game of the Year Edition",
+    "but voiced by Patrick Warburton",
 ]
 
 function addPrefix(input) {
@@ -292,7 +323,6 @@ function generate() {
     var prefix = ""
     var suffix = ""
 
-    let maxAdjectives = 3
 
     let rand = Math.random()
     let weightedRand = Math.pow(rand, 6)
@@ -313,4 +343,14 @@ function generate() {
     suffixDisplay().textContent = suffix
 }
 
+function getMaxPromptCount() {
+    let numberOfAdjectives = beforeAdjectives.length + afterAdjectives.length
+    let numberOfNouns = nouns.length
+    let maxCombinations = Math.pow(numberOfAdjectives, maxAdjectives)*numberOfNouns
+    return maxCombinations
+}
+
 genButton().addEventListener("click", generate)
+countDisplay().textContent = getMaxPromptCount() + " possible prompts"
+versionDisplay().textContent = "Version " + version
+
