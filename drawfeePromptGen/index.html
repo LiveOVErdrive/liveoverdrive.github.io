@@ -12,18 +12,37 @@
       margin-top: 40px;
       color: black;
     }
+    .large-button {
+      padding: 12px 70px;
+      font-size: 30px;
+      border-radius: 10px;
+      border: 2px solid black;
+    }
+    .verticalcenter {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    .color {
+        color: red;
+    }
   </style>
 </head>
 <body>
 
   <h1 class="centered" id="title">☕🖊️ Random Drawfee-Style Prompt Generator! ☕🖊️</h1>
   <div class="centered">
-    <button id="generatebutton">Generate!</button>
+    <button id="generatebutton" class="large-button">Generate!</button>
   </div>
-  <div class="big">
-    <span id="prefix"></span>
-    <span id="noun"></span>
-    <span id="suffix"></span>
+  <div class="verticalcenter">
+    <div class="big">
+      <span id="prefix" class="color">adjective</span>
+      <span id="noun">Noun</span>
+      <span id="suffix"></span>
+    </div>
   </div>
   <script src="./promptgen.js"></script>
 
