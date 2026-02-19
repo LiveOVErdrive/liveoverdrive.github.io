@@ -5,7 +5,7 @@ const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
 
-const version = "1.0.1"
+const version = "1.0.2"
 const maxAdjectives = 3
 
 const nouns = [
@@ -204,6 +204,8 @@ const nouns = [
     "shop-keeper",
     "adventurer",
     "dragonborn",
+    "dinosaur lie",
+    "barista",
 ]
 
 const beforeAdjectives = [
@@ -213,6 +215,8 @@ const beforeAdjectives = [
     "anime",
     "smooth",
     "buff",
+    "cool",
+    "nasty",
     "SFW",
     "Jojo's Bizarre",
     "salaryman",
@@ -341,6 +345,7 @@ const afterAdjectives = [
     "Game of the Year Edition",
     "voiced by Patrick Warburton",
     "from North America",
+    "? ... Nasty",
 ]
 
 function addPrefix(input) {
