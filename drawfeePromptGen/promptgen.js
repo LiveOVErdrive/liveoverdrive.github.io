@@ -3,9 +3,9 @@ const prefixDisplay = () => document.getElementById("prefix")
 const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
-const screen = () => document.getElementById("wholescreen")
+const wholePrompt = () => document.getElementById("wholeprompt")
 
-const version = "1.0.3"
+const version = "1.1.1"
 const maxAdjectives = 3
 
 const nouns = [
@@ -480,7 +480,7 @@ function getMaxPromptCount() {
     return maxCombinations
 }
 
-screen().addEventListener("click", generate)
+wholePrompt().addEventListener("click", generate)
 countDisplay().textContent = getMaxPromptCount().toLocaleString() + " possible prompts"
 versionDisplay().textContent = "Version " + version
 
