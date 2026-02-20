@@ -3,9 +3,9 @@ const prefixDisplay = () => document.getElementById("prefix")
 const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
-const wholePrompt = () => document.getElementById("wholeprompt")
+const genButton = () => document.getElementById("button")
 
-const version = "1.1.2"
+const version = "1.2.0"
 const maxAdjectives = 3
 
 const nouns = [
@@ -194,6 +194,10 @@ const nouns = [
     "Mr. Game and Watch",
     "Steamboat Willy",
     "Joker",
+    "Harley Quinn",
+    "Poison Ivy",
+    "The Riddler",
+    "Used Car Salesman",
     "Batman",
     "SuperMan",
     "Spider-Man",
@@ -234,6 +238,7 @@ const nouns = [
     "Sushi",
     "The Beatles",
     "Clifford",
+    "Tuxedo Mask",
     "Waldo",
     "Piedmon",
     "Frieren",
@@ -242,6 +247,32 @@ const nouns = [
     "Tiger",
     "Legolas",
     "Gimli",
+    "Chiikawa",
+    "Hachiware",
+    "Usagi Chiikawa",
+    "Sonic",
+    "Tails",
+    "Knuckles",
+    "Amy Rose",
+    "Shadow the Hedgehog",
+    "Dr. Eggman",
+    "Dr. Robotnik",
+    "Rouge the Bat",
+    "Big the Cat",
+    "Sans Undertale",
+    "Jack Frost",
+    "Santa",
+    "Jake the Dog",
+    "Finn the Human",
+    "Lumpy Space Princess",
+    "Princess Bubblegum",
+    "Marceline",
+    "BMO",
+    "NyanCat",
+    "Bill Cipher",
+    "Gojo",
+    "Panda",
+    "Golden Ryan",
 ]
 
 const beforeAdjectives = [
@@ -258,6 +289,8 @@ const beforeAdjectives = [
     "demon",
     "realistically-rendered",
     "Sanrio",
+    "messy",
+    "athletic",
     "Highlander",
     "nasty",
     "SFW",
@@ -266,6 +299,8 @@ const beforeAdjectives = [
     "colossal",
     "Charles Entertainment",
     "evil",
+    "formal",
+    "tuxedo",
     "small",
     "steampunk",
     "edgelord",
@@ -321,9 +356,11 @@ const beforeAdjectives = [
     "yassified",
     "cozy",
     "tired",
-    "divorced dad",
+    "divorced",
+    "dad",
     "bumpy",
     "incorporeal",
+    "spider-",
     "noble",
     "classic",
     "hairy",
@@ -333,11 +370,18 @@ const beforeAdjectives = [
     "friendly",
     "chibi",
     "foul",
+    "pathetic",
     "ghost",
     "golden",
     "silver",
     "old",
     "antique",
+    "Billionaire",
+    "metalhead",
+    "street racer",
+    "naturally talented",
+    "Super Saiyan",
+    "the opposite of",
     "Digimon",
     "chef",
     "Ratatouille",
@@ -377,11 +421,14 @@ const beforeAdjectives = [
     "wizard",
     "witch",
     "bard",
+    "season one",
     "Balatro joker",
     "paladin",
     "warlock",
     "cleric",
     "low-poly",
+    "injured",
+    "whiny",
 ]
 
 const afterAdjectives = [
@@ -395,6 +442,12 @@ const afterAdjectives = [
     "Animal Crossing",
     "Cats 2019",
     "The Second",
+    "Muppet",
+    "as a Chiikawa",
+    "as a Sonic",
+    "from Arcane",
+    "from Gravity Falls",
+    "from Adventure Time",
     "and Toad",
     "-Kong",
     ", Esquire",
@@ -420,6 +473,14 @@ const afterAdjectives = [
     "from North America",
     "? ... Nasty",
     "but horror",
+    "committing fraud",
+    "seeing The Horrors",
+    "with no filter",
+    "but tall",
+    "but short",
+
+
+
 ]
 
 function addPrefix(input) {
@@ -480,7 +541,7 @@ function getMaxPromptCount() {
     return maxCombinations
 }
 
-wholePrompt().addEventListener("click", generate)
+genButton().addEventListener("click", generate)
 countDisplay().textContent = getMaxPromptCount().toLocaleString() + " possible prompts"
 versionDisplay().textContent = "Version " + version
 

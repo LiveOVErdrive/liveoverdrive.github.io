@@ -14,6 +14,7 @@
     }
     .large-button {
       padding: 12px 70px;
+      margin-top: 40px;
       font-size: 30px;
       border-radius: 10px;
       border: 2px solid black;
@@ -39,13 +40,13 @@
   <div id="version">Version X</div>
   <div id="promptcount">X possible prompts</div>
   <h1 class="centered">Random Drawfee-Style Prompt Generator!</h1>
-  <h3 class="centered">click prompt to generate</h3>
-  <div >
-    <div id="wholeprompt" class="big">
-      <span id="prefix" class="color">adjective</span>
-      <span id="noun">Noun</span>
-      <span id="suffix"></span>
-    </div>
+  <div id="wholeprompt" class="big">
+    <span id="prefix" class="color">adjective</span>
+    <span id="noun">Noun</span>
+    <span id="suffix"></span>
+  </div>
+  <div class="centered">
+    <button class="large-button" id="button">Generate!</button>
   </div>
 </body>
 <script src="./promptgen.js"></script>
