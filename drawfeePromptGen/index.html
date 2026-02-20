@@ -27,29 +27,28 @@
       transform: translate(-50%, -50%);
     }
     .color {
-        color: red;
+      color: red;
     }
-    .version {
-      padding-top: 90%;
+    .wholescreen {
+      height: 100vh;
+      width: 100vw;
     }
   </style>
 </head>
 <body>
 
-  <h1 class="centered" id="title">☕🖊️ Random Drawfee-Style Prompt Generator! ☕🖊️</h1>
-  <div class="centered">
-    <button id="generatebutton" class="large-button">Generate!</button>
-  </div>
-  <div class="verticalcenter">
-    <div class="big">
-      <span id="prefix" class="color">adjective</span>
-      <span id="noun">Noun</span>
-      <span id="suffix"></span>
-    </div>
-  </div>
-  <div class="version">
+  <div id="wholescreen" class="wholescreen">
     <div id="version">Version X</div>
     <div id="promptcount">X possible prompts</div>
+    <h1 class="centered">️Random Drawfee-Style Prompt Generator!️</h1>
+    <h3 class="centered">click anywhere</h3>
+    <div >
+      <div class="big">
+        <span id="prefix" class="color">adjective</span>
+        <span id="noun">Noun</span>
+        <span id="suffix"></span>
+      </div>
+    </div>
   </div>
 
 </body>

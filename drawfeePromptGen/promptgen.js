@@ -1,11 +1,11 @@
-const genButton = () => document.getElementById("generatebutton")
 const nounDisplay = () => document.getElementById("noun")
 const prefixDisplay = () => document.getElementById("prefix")
 const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
+const screen = () => document.getElementById("wholescreen")
 
-const version = "1.0.2"
+const version = "1.0.3"
 const maxAdjectives = 3
 
 const nouns = [
@@ -206,16 +206,59 @@ const nouns = [
     "dragonborn",
     "dinosaur lie",
     "barista",
+    "Badtz-Maru",
+    "Hello Kitty",
+    "Kuromi",
+    "Pompompurin",
+    "Pochacco",
+    "Destiel Confession",
+    "dog",
+    "capybara",
+    "penguin",
+    "pigeon",
+    "rat",
+    "two rats",
+    "butterfly",
+    "satan",
+    "Luffy",
+    "NPC",
+    "Hades",
+    "Zagreus",
+    "Schmando",
+    "Schmidt",
+    "Nando",
+    "Professor Oak",
+    "Beef",
+    "Boba Tea",
+    "Ramen",
+    "Sushi",
+    "The Beatles",
+    "Clifford",
+    "Waldo",
+    "Piedmon",
+    "Frieren",
+    "Kotetsu T. Kaburagi",
+    "Barnaby Brooks Jr.",
+    "Tiger",
+    "Legolas",
+    "Gimli",
 ]
 
 const beforeAdjectives = [
     "flat",
     "metal",
     "Powerpuff",
+    "Jacko pose",
     "anime",
     "smooth",
     "buff",
     "cool",
+    "wise-cracking",
+    "sly",
+    "demon",
+    "realistically-rendered",
+    "Sanrio",
+    "Highlander",
     "nasty",
     "SFW",
     "Jojo's Bizarre",
@@ -311,6 +354,34 @@ const beforeAdjectives = [
     "keyhole",
     "Family Guy",
     "gritty reboot",
+    "edgy comedian",
+    "classic rock",
+    "punk",
+    "cyberpunk",
+    "goth",
+    "nerd",
+    "theater kid",
+    "Fast & Furious",
+    "Don Bluth",
+    "90s Disney",
+    "Sassy",
+    "Posessed",
+    "Legalized",
+    "mascot costume",
+    "1980s",
+    "medieval",
+    "indie",
+    "caffeinated",
+    "DJ",
+    "warrior",
+    "wizard",
+    "witch",
+    "bard",
+    "Balatro joker",
+    "paladin",
+    "warlock",
+    "cleric",
+    "low-poly",
 ]
 
 const afterAdjectives = [
@@ -322,6 +393,7 @@ const afterAdjectives = [
     "full of vampires",
     "made from cheese",
     "Animal Crossing",
+    "Cats 2019",
     "The Second",
     "and Toad",
     "-Kong",
@@ -329,6 +401,7 @@ const afterAdjectives = [
     "-field",
     "in mortal peril",
     "the Frog",
+    "from Hades",
     "Beastars",
     "from Mario",
     "with cheese",
@@ -346,6 +419,7 @@ const afterAdjectives = [
     "voiced by Patrick Warburton",
     "from North America",
     "? ... Nasty",
+    "but horror",
 ]
 
 function addPrefix(input) {
@@ -406,7 +480,7 @@ function getMaxPromptCount() {
     return maxCombinations
 }
 
-genButton().addEventListener("click", generate)
-countDisplay().textContent = getMaxPromptCount() + " possible prompts"
+screen().addEventListener("click", generate)
+countDisplay().textContent = getMaxPromptCount().toLocaleString() + " possible prompts"
 versionDisplay().textContent = "Version " + version
 
