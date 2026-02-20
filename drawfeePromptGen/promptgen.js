@@ -5,7 +5,7 @@ const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("button")
 
-const version = "1.2.0"
+const version = "1.2.1"
 const maxAdjectives = 3
 
 const nouns = [
@@ -224,7 +224,10 @@ const nouns = [
     "two rats",
     "butterfly",
     "satan",
-    "Luffy",
+    "Monkey D. Luffy",
+    "Nami One Piece",
+    "Sanji One Piece",
+    "Buggy the Clown",
     "NPC",
     "Hades",
     "Zagreus",
@@ -279,7 +282,6 @@ const beforeAdjectives = [
     "flat",
     "metal",
     "Powerpuff",
-    "Jacko pose",
     "anime",
     "smooth",
     "buff",
@@ -314,6 +316,7 @@ const beforeAdjectives = [
     "elf",
     "orc",
     "dragonborn",
+    "NPC",
     "halfling",
     "sugar free",
     "Nuesday",
@@ -456,6 +459,8 @@ const afterAdjectives = [
     "the Frog",
     "from Hades",
     "Beastars",
+    "on TikTok",
+    "posting an opinion online",
     "from Mario",
     "with cheese",
     "but good",
