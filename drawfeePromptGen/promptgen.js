@@ -4,9 +4,10 @@ const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("button")
+const pageTitle = () => document.getElementById("title")
 
-const version = "1.2.1"
-const maxAdjectives = 3
+const version = "1.3.0"
+const maxAdjectives = 5
 
 const nouns = [
     "snakes",
@@ -30,6 +31,12 @@ const nouns = [
     "Shrek",
     "Garfield",
     "Odie",
+    "Nermal",
+    "Jon Arbuckle",
+    "Lyman Garfield",
+    "Opus the Penguin",
+    "Bill the Cat",
+    "Abe Lincoln",
     "Donkey",
     "Jotaro",
     "Joseph Joestar",
@@ -145,8 +152,8 @@ const nouns = [
     "Niles",
     "Frasier",
     "Homer Simpson",
-    "Bart Simpson",
     "Marge Simpson",
+    "Snoopy",
     "Peter Griffin",
     "Brian Griffin",
     "Bob Belcher",
@@ -176,9 +183,15 @@ const nouns = [
     "Godot",
     "Mario",
     "Luigi",
+    "Wario",
+    "Waluigi",
+    "Birdo",
+    "Kirby",
+    "Scarfy",
     "Peach",
     "Bowser",
     "Toad",
+    "Transformer",
     "Goomba",
     "Majima",
     "Kiryu",
@@ -272,10 +285,24 @@ const nouns = [
     "Marceline",
     "BMO",
     "NyanCat",
+    "TOM Toonami",
     "Bill Cipher",
     "Gojo",
     "Panda",
     "Golden Ryan",
+    "Nigel Thornberry",
+    "Swat Cats",
+    "Samurai Pizza Cats",
+    "Michaelangelo",
+    "Donatello",
+    "Raphael",
+    "Leonardo",
+    "Sheldon",
+    "Samurai Jack",
+    "Tomato",
+    "Pizza",
+    "Gollum",
+
 ]
 
 const beforeAdjectives = [
@@ -283,6 +310,7 @@ const beforeAdjectives = [
     "metal",
     "Powerpuff",
     "anime",
+    "Renaissance",
     "smooth",
     "buff",
     "cool",
@@ -331,11 +359,11 @@ const beforeAdjectives = [
     "oily",
     "stinky",
     "dangerous",
+    "Y2K",
     "cat",
     "magical girl",
     "The Loathesome",
     "mechanical",
-    "cheesy five-layer",
     "epic",
     "construction worker",
     "Final Fantasy",
@@ -350,6 +378,9 @@ const beforeAdjectives = [
     "Super-",
     "undead",
     "scared",
+    "Wa-",
+    "Bizarro",
+    "Italian cold-steel",
     "bodybuilder",
     "shaved",
     "were-",
@@ -425,18 +456,18 @@ const beforeAdjectives = [
     "witch",
     "bard",
     "season one",
-    "Balatro joker",
     "paladin",
     "warlock",
     "cleric",
     "low-poly",
-    "injured",
     "whiny",
+    "fashionable",
 ]
 
 const afterAdjectives = [
     "with legs",
     "gajinka",
+    "jablinsky",
     "fursona",
     "from memory",
     "and Doggy Daddy",
@@ -445,32 +476,45 @@ const afterAdjectives = [
     "Animal Crossing",
     "Cats 2019",
     "The Second",
-    "Muppet",
+    "Monster Hunter Armor",
+    "as a Muppet",
+    "as a Balatro joker",
     "as a Chiikawa",
     "as a Sonic",
     "from Arcane",
+    "from Hades",
+    "from The Wild Thornberries",
+    "from Rocket Power",
+    "From Ed Edd and Eddy",
     "from Gravity Falls",
     "from Adventure Time",
     "and Toad",
     "-Kong",
-    ", Esquire",
+    "wearing too many belts",
+    "in disguise",
+    "as a Bayblade",
+    "pondering existance",
+    "on a Nickelodeon Game Show",
+    "solving the Trolley Problem",
+    "with crazy hair",
+    "Esquire",
     "-field",
     "in mortal peril",
+    "'s Stand",
     "the Frog",
     "from Hades",
     "Beastars",
-    "on TikTok",
     "posting an opinion online",
     "from Mario",
     "with cheese",
     "but good",
+    "winning an Oscar",
     "but worse",
     "with a beard",
     "-Doo",
     "Pro",
     "-hunter",
-    "GX",
-    ", Ace Attorney",
+    "Ace Attorney",
     "to relax/study to",
     "Deluxe",
     "Game of the Year Edition",
@@ -483,19 +527,24 @@ const afterAdjectives = [
     "with no filter",
     "but tall",
     "but short",
-
-
-
 ]
 
 function addPrefix(input) {
     let index = Math.floor(Math.random() * (beforeAdjectives.length))
-    return input + ' ' + beforeAdjectives[index] 
+    if (input === "") {
+        return beforeAdjectives[index] 
+    } else {
+        return input + ', ' + beforeAdjectives[index] 
+    }
 }
 
 function addSuffix(input) {
     let index = Math.floor(Math.random() * (afterAdjectives.length))
-    return input + ' ' + afterAdjectives[index] 
+    if (input === "") {
+        return afterAdjectives[index] 
+    } else {
+        return input + ', ' + afterAdjectives[index] 
+    }
 }
 
 function setPromptColor(amount) {
@@ -513,6 +562,16 @@ function addAdjective(input) {
     }
 }
 
+function setHeadingRarityColor(rarity) {
+    var color = "black"
+    // rarity is 0 indexed
+    if (rarity === 1) color = "lime"
+    else if (rarity === 2) color = "dodgerblue"
+    else if (rarity === 3) color = "blueviolet"
+    else if (rarity === 4) color = "orange"
+    pageTitle().style.color = color
+}
+
 function generate() {
     let nounIndex = Math.floor(Math.random() * (nouns.length))
     var noun = nouns[nounIndex]
@@ -521,7 +580,7 @@ function generate() {
 
 
     let rand = Math.random()
-    let weightedRand = Math.pow(rand, 6)
+    let weightedRand = Math.pow(rand, 14)
     let scaledRand = weightedRand * maxAdjectives
     let numberOfAdjectives = Math.floor(scaledRand)
 
@@ -534,9 +593,17 @@ function generate() {
     }
 
     setPromptColor()
+    setHeadingRarityColor(numberOfAdjectives)
     nounDisplay().textContent = noun
     prefixDisplay().textContent = prefix
     suffixDisplay().textContent = suffix
+}
+
+function getCommonPromptCount() {
+    let numberOfAdjectives = beforeAdjectives.length + afterAdjectives.length
+    let numberOfNouns = nouns.length
+    let maxCommonCombinations = numberOfAdjectives * numberOfNouns
+    return maxCommonCombinations
 }
 
 function getMaxPromptCount() {
@@ -547,6 +614,6 @@ function getMaxPromptCount() {
 }
 
 genButton().addEventListener("click", generate)
-countDisplay().textContent = getMaxPromptCount().toLocaleString() + " possible prompts"
+countDisplay().textContent = getCommonPromptCount().toLocaleString() + " possible prompts"
 versionDisplay().textContent = "Version " + version
 
