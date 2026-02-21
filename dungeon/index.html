@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .monospace {
+        font-family: monospace;
+    }
+    .map {
+        font-family: monospace;
+        background-color: black;
+        color: white;
+    }
+    .square-button {
+        width: 25px;
+        height: 25px;
+        margin: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="monospace">Dungeoneering</h1>
+  <div id="map" class="map">
+    # # # # # # # #<br>
+    # . . . . . . #<br>
+    # . . . . . . #<br>
+    # . . . . . . #<br>
+    # . . . . . . #<br>
+    # . . . . . . #<br>
+    # . . . . . . #<br>
+    # # # # # # # #<br>
+  </div>
+  <div class="monospace">
+    <button id="upleft" class="square-button">7</button>
+    <button id="up" class="square-button">8</button>
+    <button id="upright" class="square-button">9</button>
+    <br>
+    <button id="left" class="square-button">4</button>
+    <button id="middle" class="square-button">5</button>
+    <button id="right" class="square-button">6</button>
+    <br>
+    <button id="downleft" class="square-button">1</button>
+    <button id="down" class="square-button">2</button>
+    <button id="downright" class="square-button">3</button>
+    <br>
+  </div>
+
+</body>
+
+<script src="./dungeon.js"></script>

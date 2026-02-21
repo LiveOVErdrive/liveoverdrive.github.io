@@ -1,0 +1,21 @@
+
+const upLeftButton = () => document.getElementById("upleft")
+const upButton = () => document.getElementById("up")
+const upRightButton = () => document.getElementById("upright")
+const leftButton = () => document.getElementById("left")
+const middleButton = () => document.getElementById("middle")
+const rightButton = () => document.getElementById("right")
+const downLeftButton = () => document.getElementById("downleft")
+const downButton = () => document.getElementById("down")
+const downRightButton = () => document.getElementById("downright")
+
+
+upLeftButton().addEventListener("click", handleUpLeft)
+upButton().addEventListener("click", handleUp)
+upRightButton().addEventListener("click", handleUpRight)
+leftButton().addEventListener("click", handleLeft)
+middleButton().addEventListener("click", handleMiddle)
+rightButton().addEventListener("click", handleRight)
+downLeftButton().addEventListener("click", handleDownLeft)
+downButton().addEventListener("click", handleDown)
+downRightButton().addEventListener("click", handleDownRight)
