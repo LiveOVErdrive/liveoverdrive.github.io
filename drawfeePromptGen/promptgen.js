@@ -6,7 +6,7 @@ const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("button")
 const pageTitle = () => document.getElementById("title")
 
-const version = "1.3.1"
+const version = "1.3.2"
 const maxAdjectives = 5
 
 const nouns = [
@@ -289,9 +289,6 @@ const nouns = [
     "NPC",
     "Hades",
     "Zagreus",
-    "Schmando",
-    "Schmidt",
-    "Nando",
     "Beef",
     "Boba Tea",
     "Ramen",
@@ -384,12 +381,11 @@ const nouns = [
     "Tomato",
     "Pizza",
     "Gollum",
-    "York",
-    "Rosé",
-    "Grendan",
     "Grandma",
-    "Eugene",
-    "Jancy True",
+    "Agent Smith",
+    "Neo",
+    "Trinity",
+    "Morpheus",
 ]
 
 const beforeAdjectives = [
@@ -434,6 +430,9 @@ const beforeAdjectives = [
     "big",
     "large",
     "Sir",
+    "Dame",
+    "The Big",
+    "royal",
     "pickle",
     "elf",
     "orc",
@@ -501,10 +500,6 @@ const beforeAdjectives = [
     "princess",
     "eerie",
     "unsettling",
-    "Agent Smith",
-    "Neo",
-    "Trinity",
-    "Morpheus",
     "eldritch",
     "all-seeing",
     "all-knowing",
@@ -584,12 +579,12 @@ const beforeAdjectives = [
     "whiny",
     "fashionable",
     "sincere fanart of",
+    "dramatic",
     "pixel art",
 ]
 
 const afterAdjectives = [
     "gajinka",
-    "jablinsky",
     "fursona",
     "from memory",
     "and Doggy Daddy",
@@ -597,7 +592,9 @@ const afterAdjectives = [
     "Animal Crossing",
     "The Second",
     "Monster Hunter Armor",
+    "as a big Ska fan",
     "as a Muppet",
+    "in the dark",
     "as a Balatro joker",
     "as a Chiikawa",
     "as a Sonic",
