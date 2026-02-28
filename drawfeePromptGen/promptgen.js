@@ -6,7 +6,7 @@ const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("button")
 const pageTitle = () => document.getElementById("title")
 
-const version = "1.3.3"
+const version = "1.4.0"
 const maxAdjectives = 5
 
 const nouns = [
@@ -181,7 +181,9 @@ const nouns = [
     "Karlach",
     "Shadowheart",
     "Lae'zel",
-    "Will Baldur's Gate",
+    "Wyll",
+    "Minthara",
+    "Halsin",
     "Capybara",
     "Whale",
     "Tapir",
@@ -276,7 +278,7 @@ const nouns = [
     "Ike",
     "Mr. Game and Watch",
     "Steamboat Willy",
-    "Joker",
+    "The Joker",
     "Harley Quinn",
     "Poison Ivy",
     "The Riddler",
@@ -284,6 +286,10 @@ const nouns = [
     "Batman",
     "SuperMan",
     "Spider-Man",
+    "Captain America",
+    "Iron Man",
+    "The Hulk",
+    "Thor",
     "Ziggy",
     "Archie",
     "Jughead",
@@ -417,6 +423,15 @@ const nouns = [
     "Snowy/Milou",
     "Asterix",
     "Obelix",
+    "Zorro",
+    "Zeus",
+    "Athena",
+    "Hera",
+    "Hephaestus",
+    "Poseidon",
+    "Persephone",
+    "Hercules",
+    "Odysseus",
 ]
 
 const beforeAdjectives = [
@@ -576,7 +591,6 @@ const beforeAdjectives = [
     "catboy",
     "odd",
     "keyhole",
-    "Family Guy",
     "gritty reboot",
     "edgy comedian",
     "classic rock",
@@ -627,6 +641,7 @@ const beforeAdjectives = [
     "plaid",
     "survival-horror",
     "crafting",
+    "isekai'd"
 ]
 
 const afterAdjectives = [
@@ -660,6 +675,12 @@ const afterAdjectives = [
     "from Gravity Falls",
     "from Adventure Time",
     "from The Far Side",
+    "from World of Gumball",
+    "from South Park",
+    "from Family Guy",
+    "from The Simpsons",
+    "raving",
+    "in a mosh pit",
     "and Toad",
     "-Kong",
     "wearing too many belts",
@@ -703,15 +724,20 @@ const afterAdjectives = [
     "but tall",
     "but short",
     "in a band",
+    "in a boy band",
+    "in a girl group",
     "riding a skateboard",
     "on rollerblades",
     "coffee shop AU",
     "college AU",
     "office job AU",
+    "high school AU",
     "in purgatory",
     "in hell",
     "in super-Hell",
     "making an egg",
+    "on Broadway",
+    "as a rockstar",
 ]
 
 function addPrefix(input) {
@@ -799,6 +825,6 @@ function getMaxPromptCount() {
 }
 
 genButton().addEventListener("click", generate)
-countDisplay().textContent = getCommonPromptCount().toLocaleString() + " possible prompts"
+countDisplay().textContent = getCommonPromptCount().toLocaleString() + " common prompts"
 versionDisplay().textContent = "Version " + version
 

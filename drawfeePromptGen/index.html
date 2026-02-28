@@ -5,48 +5,64 @@
     .centered {
       display: flex;
       justify-content: center;
+      margin: 3px;
     }
     .big {
       font-size: 3rem;
       text-align: center;
-      margin-top: 40px;
       color: black;
     }
     .large-button {
-      padding: 12px 70px;
-      margin-top: 10px;
+      padding: 5px 70px;
       font-size: 30px;
       border-radius: 10px;
       border: 2px solid black;
     }
-    .verticalcenter {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+    .box {
+      flex: 1;
+      border: 4px solid black;
+      margin: 10px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
     .color {
       color: red;
     }
-    .wholescreen {
-      height: 100vh;
-      width: 100vw;
+    .bold {
+      font-weight: bold;
+    }
+    .html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px; /* optional spacing from edges */
     }
   </style>
 </head>
 <body>
-  <div id="version">Version X</div>
-  <div id="promptcount">X possible prompts</div>
-  <h1 id="title" class="centered">Random Adjective-Noun Drawing Prompt Generator!</h1>
-  <div class="centered">
-    <button class="large-button" id="button">Generate!</button>
-  </div>
-  <div id="wholeprompt" class="big">
-    <span id="prefix" class="color">adjective</span>
-    <span id="noun">Noun</span>
-    <span id="suffix"></span>
+  <div class="container">
+    <h1 id="title" class="centered">You Should Draw...</h1>
+    <div id="wholeprompt" class="big">
+      <span id="prefix" class="color">adjective</span>
+      <span id="noun">Noun</span>
+      <span id="suffix"></span>
+    </div>
+    <div class="box"></div>
+    <div class="centered">
+      <button class="large-button" id="button">Generate!</button>
+    </div>
+    <p class="footer">
+      <span id="version" class="bold">Version X</span>
+      <span>https://live-overdrive.neocities.org/promptgenerator/</span>
+      <span id="promptcount">X common prompts</span>
+    </p>
   </div>
 </body>
 <script src="./promptgen.js"></script>
