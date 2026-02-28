@@ -3,10 +3,10 @@ const prefixDisplay = () => document.getElementById("prefix")
 const suffixDisplay = () => document.getElementById("suffix")
 const versionDisplay = () => document.getElementById("version")
 const countDisplay = () => document.getElementById("promptcount")
-const genButton = () => document.getElementById("button")
+const genButton = () => document.getElementById("box")
 const pageTitle = () => document.getElementById("title")
 
-const version = "1.4.0"
+const version = "1.4.1"
 const maxAdjectives = 5
 
 const nouns = [
@@ -294,6 +294,9 @@ const nouns = [
     "Archie",
     "Jughead",
     "Takumi Fujiwara",
+    "Bunta Fujiwara",
+    "Keisuke Takahashi",
+    "Ryosuke Takahashi",
     "shop-keeper",
     "adventurer",
     "dragonborn",
@@ -304,12 +307,11 @@ const nouns = [
     "Kuromi",
     "Pompompurin",
     "Pochacco",
-    "Destiel Confession",
     "dog",
     "capybara",
     "pig",
     "penguin",
-    "pidgeon",
+    "pigeon",
     "rat",
     "two rats",
     "butterfly",
