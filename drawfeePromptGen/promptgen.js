@@ -6,7 +6,7 @@ const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("box")
 const pageTitle = () => document.getElementById("title")
 
-const version = "1.4.2"
+const version = "1.4.3"
 const maxAdjectives = 5
 
 const nouns = [
@@ -250,6 +250,10 @@ const nouns = [
     "Miles Edgeworth",
     "Herlock Sholmes",
     "Godot",
+    "Kirby",
+    "Scarfy",
+    "King Dedede",
+    "Metaknight",
     "Mario",
     "Nabbit",
     "Yoshi",
@@ -258,8 +262,6 @@ const nouns = [
     "Wario",
     "Waluigi",
     "Birdo",
-    "Kirby",
-    "Scarfy",
     "Peach",
     "Bowser",
     "Toad",
@@ -365,6 +367,7 @@ const nouns = [
     "Rouge the Bat",
     "Big the Cat",
     "Sans Undertale",
+    "Flowy Undertale",
     "Jack Frost",
     "Santa",
     "Jake the Dog",
@@ -444,9 +447,15 @@ const nouns = [
     "Rosie the Robot",
     "Totaro",
     "Porco Rosso",
+    "Domo",
 ]
 
 const beforeAdjectives = [
+    "doomscrolling",
+    "biblically accurate",
+    "gamer",
+    "night of the living",
+    "elder god",
     "tech startup",
     "stunlocked",
     "flattened",
