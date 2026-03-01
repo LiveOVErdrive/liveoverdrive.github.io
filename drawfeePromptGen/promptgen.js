@@ -6,7 +6,7 @@ const countDisplay = () => document.getElementById("promptcount")
 const genButton = () => document.getElementById("box")
 const pageTitle = () => document.getElementById("title")
 
-const version = "1.4.1"
+const version = "1.4.2"
 const maxAdjectives = 5
 
 const nouns = [
@@ -434,6 +434,16 @@ const nouns = [
     "Persephone",
     "Hercules",
     "Odysseus",
+    "Jollybee",
+    "Buc-ee",
+    "Gritty",
+    "George Jetson",
+    "Jane Jetson",
+    "Judy Jetson",
+    "Elroy Jetson",
+    "Rosie the Robot",
+    "Totaro",
+    "Porco Rosso",
 ]
 
 const beforeAdjectives = [
@@ -643,10 +653,12 @@ const beforeAdjectives = [
     "plaid",
     "survival-horror",
     "crafting",
-    "isekai'd"
+    "isekai'd",
+    "Studio Ghibli",
 ]
 
 const afterAdjectives = [
+    "Blast Mode",
     "JRPG",
     "Roguelike",
     "Magic the Gathering Card",
@@ -681,6 +693,7 @@ const afterAdjectives = [
     "from South Park",
     "from Family Guy",
     "from The Simpsons",
+    "as an AD&D monster",
     "raving",
     "in a mosh pit",
     "and Toad",
